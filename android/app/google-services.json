@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "346356172725",
+    "project_id": "empoderainformacoes",
+    "storage_bucket": "empoderainformacoes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346356172725:android:6ac8a385020ad436c07bfc",
+        "android_client_info": {
+          "package_name": "com.example.empoderainformacoes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN4j8cncN2EANubUnok7K_hRa-oysdmW0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

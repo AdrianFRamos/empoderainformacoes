@@ -1,4 +1,5 @@
 import 'package:empoderainformacoes/const/colors.dart';
+import 'package:empoderainformacoes/screens/profileScreen.dart';
 import 'package:flutter/material.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -28,7 +29,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: AppColor.secondary
           ),
           child: IconButton(
-            onPressed: (){}, 
+            onPressed: (){
+              Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
+            }, 
             icon: const Image(
               image: AssetImage("assets/icons/mulheraceno.png",),
             )

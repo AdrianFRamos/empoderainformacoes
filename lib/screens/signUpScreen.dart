@@ -1,7 +1,10 @@
 import 'package:empoderainformacoes/const/colors.dart';
+import 'package:empoderainformacoes/controllers/signupController.dart';
+import 'package:empoderainformacoes/models/userModel.dart';
 import 'package:empoderainformacoes/screens/loginScreen.dart';
 import 'package:empoderainformacoes/utils/helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SignUpScreen extends StatelessWidget {
   static const routeName = "/SignUpScreen";
@@ -9,6 +12,9 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SignUpController());
+    final _formKey = GlobalKey<FormState>();
+    
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -32,12 +38,14 @@ class SignUpScreen extends StatelessWidget {
                           height: 15,
                         ),
                 Form(
+                  key: _formKey,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 3),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         TextFormField(
+                          controller: controller.fullname,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.person_outline_rounded),
                             labelText: "Nome Completo",
@@ -49,6 +57,7 @@ class SignUpScreen extends StatelessWidget {
                           height: 10,
                         ),
                         TextFormField(
+                          controller: controller.email,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.email_rounded),
                             labelText: "E-mail",
@@ -60,6 +69,7 @@ class SignUpScreen extends StatelessWidget {
                           height: 10,
                         ),
                         TextFormField(
+                          controller: controller.celular,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.phone_android_outlined),
                             labelText: "Telefone",
@@ -71,6 +81,7 @@ class SignUpScreen extends StatelessWidget {
                           height: 10,
                         ),
                         TextFormField(
+                          controller: controller.password,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.key),
                             labelText: "Senha",
@@ -95,7 +106,21 @@ class SignUpScreen extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              if(_formKey.currentState!.validate()){
+                                //SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                                
+                                //SignUpController.instance.phoneAuthentication(controller.celular.text.trim());
+                                
+                                final user = User(
+                                  email: controller.email.text.trim(), 
+                                  fullName: controller.fullname.text.trim(), 
+                                  password: controller.password.text.trim(),
+                                  celular: controller.celular.text.trim(), 
+                                );
+                                SignUpController.instance.createUser(user);
+                              }
+                            },
                             child: const Text(
                               "Cadastre-se",
                               style: TextStyle(

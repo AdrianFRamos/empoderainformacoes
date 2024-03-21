@@ -1,8 +1,10 @@
 import 'package:empoderainformacoes/const/colors.dart';
+import 'package:empoderainformacoes/controllers/loginController.dart';
 import 'package:empoderainformacoes/screens/forgetPassword.dart';
 import 'package:empoderainformacoes/screens/signUpScreen.dart';
 import 'package:empoderainformacoes/utils/helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 import '../widgets/forgetPasswordWidget.dart';
@@ -13,6 +15,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -40,6 +43,7 @@ class LoginScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         TextFormField(
+                          controller: controller.email,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.person_outline_outlined),
                             labelText: "E-mail",
@@ -51,6 +55,11 @@ class LoginScreen extends StatelessWidget {
                           height: 20,
                         ),
                         TextFormField(
+                          controller: controller.password,
+                          validator: (value) {
+                            if (value!.isEmpty) return 'Digite sua senha';
+                            return null;
+                          },
                           decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.key),
                             labelText: "Senha",
@@ -128,7 +137,7 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: (){},
+                            onPressed: () => controller.login(),
                             child:  const Text(
                               "LOGIN",
                               style: TextStyle(

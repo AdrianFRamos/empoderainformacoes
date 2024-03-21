@@ -37,6 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.6
   google_fonts: ^6.1.0
   flutter_otp_text_field: ^1.1.1
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.16.0
+  get: ^4.6.6
+  cloud_firestore: ^4.15.9
 
 dev_dependencies:
   flutter_test:
@@ -65,13 +69,14 @@ flutter:
   assets:
     - assets/logos/logoempodera.jpeg
     - assets/logos/logo-unespar.jpg
+    - assets/logos/google.png
     - assets/icons/logoempodera_semfundo.png
     - assets/icons/mulheraceno.png
     - assets/images/maefilho.png
     - assets/images/carroussel1.png
     - assets/images/carroussel2.png
     - assets/images/carroussel3.jpg
-    - assets/logos/google.png
+    - assets/images/educacao.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

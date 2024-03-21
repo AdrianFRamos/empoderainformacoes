@@ -1,7 +1,8 @@
 import 'package:empoderainformacoes/const/colors.dart';
-import 'package:empoderainformacoes/screens/homeScreen.dart';
+import 'package:empoderainformacoes/controllers/otpController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
 
 class OTPScreen extends StatelessWidget {
   static const routeName = '/OTPScreen';
@@ -9,6 +10,9 @@ class OTPScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
+    var otpController = Get.put(OTPController());
+    var otp;
     return Scaffold(
       body: Container(
         color: const Color.fromARGB(255, 245, 200, 229),
@@ -54,7 +58,10 @@ class OTPScreen extends StatelessWidget {
               numberOfFields: 6,
               fillColor: const Color.fromARGB(255, 255, 255, 255),
               filled: true,
-              onSubmit: (code){ print("OTP is => $code");},
+              onSubmit: (code){ 
+                otp = code;
+                OTPController.instance.verifyOTP(otp);
+              },
             ),
             const SizedBox(
               height: 20,
@@ -63,7 +70,7 @@ class OTPScreen extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: (){
-                  Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+                  OTPController.instance.verifyOTP(otp);
                 }, 
                 child: const Text(
                   "Proximo",

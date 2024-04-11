@@ -5,6 +5,7 @@ import 'package:empoderainformacoes/screens/forgetPassword.dart';
 import 'package:empoderainformacoes/screens/homeScreen.dart';
 import 'package:empoderainformacoes/screens/introScreen.dart';
 import 'package:empoderainformacoes/screens/loginScreen.dart';
+import 'package:empoderainformacoes/screens/mailScreen.dart';
 import 'package:empoderainformacoes/screens/otpScreen.dart';
 import 'package:empoderainformacoes/screens/profileScreen.dart';
 import 'package:empoderainformacoes/screens/signUpScreen.dart';
@@ -17,7 +18,7 @@ import 'screens/infoScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
     .then((value) => Get.put(AuthRepository())
   );
   runApp(const MyApp());
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return GetMaterialApp(
       title: 'Empodera Informações',
       theme: ThemeData(
@@ -61,6 +63,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (context) => const LoginScreen(),
         SignUpScreen.routeName: (context) => const SignUpScreen(),
         ForgetPasswordScreen.routeName: (context) => const ForgetPasswordScreen(),
+        MailScreen.routeName: (context) => const MailScreen(),
         OTPScreen.routeName: (context) => const OTPScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
         ProfileScreen.routeName: (context) => const ProfileScreen(),

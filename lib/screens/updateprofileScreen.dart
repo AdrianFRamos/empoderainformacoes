@@ -1,4 +1,4 @@
-import 'package:empoderainformacoes/controllers/updateProfileController.dart';
+import 'package:empoderainformacoes/controllers/profileController.dart';
 import 'package:empoderainformacoes/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,7 +30,13 @@ class UpdateProfileScreen extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
-                  User userData = snapshot.data as User;
+                  User user = snapshot.data as User;
+                  final id = TextEditingController(text: user.id);
+                  final email = TextEditingController(text: user.email);
+                  final password = TextEditingController(text: user.password);
+                  final fullname = TextEditingController(text: user.fullName);
+                  final celular = TextEditingController(text: user.celular);
+
                   return Column(
                     children: <Widget>[
                       Stack(
@@ -69,7 +75,7 @@ class UpdateProfileScreen extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             TextFormField(
-                              initialValue: userData.fullName,
+                              controller: fullname,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.person_outline_rounded),
                                 labelText: "Nome Completo",
@@ -81,7 +87,7 @@ class UpdateProfileScreen extends StatelessWidget {
                               height: 10,
                             ),
                             TextFormField(
-                              initialValue: userData.email,
+                              controller: email,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.email_rounded),
                                 labelText: "E-mail",
@@ -93,7 +99,7 @@ class UpdateProfileScreen extends StatelessWidget {
                               height: 10,
                             ),
                             TextFormField(
-                              initialValue: userData.celular,
+                              controller: celular,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.phone_android_outlined),
                                 labelText: "Telefone",
@@ -105,7 +111,7 @@ class UpdateProfileScreen extends StatelessWidget {
                               height: 10,
                             ),
                             TextFormField(
-                              initialValue: userData.password,
+                              controller: password,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.key),
                                 labelText: "Senha",
@@ -119,7 +125,16 @@ class UpdateProfileScreen extends StatelessWidget {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: () => Get.to(() => UpdateProfileScreen()), 
+                                onPressed: () async {
+                                  final userData = User(
+                                    id: id.text.trim(),
+                                    email: email.text.trim(), 
+                                    fullName: fullname.text.trim(), 
+                                    password: password.text.trim(), 
+                                    celular: celular.text.trim()
+                                  );
+                                  await controller.updateRecord(userData);
+                                }, 
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.pink[50],
                                   side: BorderSide.none,

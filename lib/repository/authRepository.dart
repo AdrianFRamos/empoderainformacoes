@@ -1,26 +1,44 @@
 import 'package:empoderainformacoes/middleware/loginErros.dart';
 import 'package:empoderainformacoes/screens/homeScreen.dart';
 import 'package:empoderainformacoes/screens/loginScreen.dart';
+import 'package:empoderainformacoes/screens/mailScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import '../middleware/exceptions.dart';
 
 class AuthRepository extends GetxController {
   static AuthRepository get instance => Get.find();
 
   final _auth = FirebaseAuth.instance;
-  late final Rx<User?> firebaseUser;
+  late final Rx<User?> _firebaseUser;
   var verificationId = ''.obs;
+  //late final GoogleSignInAccount _googleUser;
+
+  User? get firebaseUser => _firebaseUser.value;
+  //String get getUserID => firebaseUser?uid ?? ""; 
+  //String get getUserEmail => firebaseUser?email ?? ""; 
 
   @override
   void onReady() {
-    firebaseUser = Rx<User?>(_auth.currentUser);
-    firebaseUser.bindStream(_auth.userChanges());
-    ever(firebaseUser, _setInitialScreen);
+    _firebaseUser = Rx<User?>(_auth.currentUser);
+    _firebaseUser.bindStream(_auth.userChanges());
+    setInitialScreen(_firebaseUser.value);
+    //ever(firebaseUser, _setInitialScreen);
   }
 
-  void _setInitialScreen(User? user) {
-    user == null ? Get.offAll(() => const LoginScreen()) : Get.offAll(() => const HomeScreen());
+  setInitialScreen(User? user) {
+    user == null 
+      ? Get.offAll(() => const LoginScreen()) 
+      : user.emailVerified 
+        ? Get.offAll(() => const HomeScreen()) 
+        : Get.offAll(() => const MailScreen());
   }
+
+
+
+//-----------------------CELULAR-------------------------//
 
   loginWithCelular(String phoneNumber) async {
     try {
@@ -62,10 +80,12 @@ class AuthRepository extends GetxController {
     return credentials.user != null ? true : false;
   }
 
+//-----------------------EMAIL e SENHA-------------------------//
+
   Future<void> createUserWithEmailAndPassword(String email, String password) async {
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      firebaseUser.value != null ? Get.offAll(() => HomeScreen()) : Get.offAll(() => const LoginScreen()); 
+      _firebaseUser.value != null ? Get.offAll(() => HomeScreen()) : Get.offAll(() => const LoginScreen()); 
     } on FirebaseAuthException catch (e) {
       final ex = SignUpFailure.code(e.code);
       print('Firebase Auth Exception - ${ex.message}');
@@ -92,6 +112,53 @@ class AuthRepository extends GetxController {
     }
   }
 
+  Future<void> sendEmailVerification() async{
+    try {
+      await _auth.currentUser?.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      final ex = TExceptions.fromCode(e.code);
+      throw ex.message;
+    } catch (_) {
+      const ex = TExceptions();
+      throw ex.message;
+    }
+  }
 
-  Future<void> logout() async => await _auth.signOut();
+  //-----------------------GOOGLE E FACEBOOK-------------------------//
+
+  Future<UserCredential?> signInWithGoogle() async{
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      final ex = TExceptions.fromCode(e.code);
+      throw ex.message;
+    } catch (_){
+      const ex = TExceptions();
+      throw ex.message;
+    }
+  }
+
+  //Future<UserCredential> signInWithFacebook() async{
+  //}
+
+  Future<void> logout() async {
+    try {
+      //await GoogleSignIn().signOut();
+      //await FacebookAuth.instance.logOut();
+      await FirebaseAuth.instance.signOut();
+      Get.offAll(() => LoginScreen());
+    } on FirebaseAuthException catch (e) {
+      throw e.message!;
+    } on FormatException catch (e){
+      throw e.message;
+    } catch (e){
+      throw 'Logout não concluido. Tente novamente';
+    }
+  }
 }

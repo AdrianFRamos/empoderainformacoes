@@ -1,7 +1,6 @@
 import 'package:empoderainformacoes/models/userModel.dart';
 import 'package:empoderainformacoes/repository/authRepository.dart';
 import 'package:empoderainformacoes/repository/userRepository.dart';
-import 'package:empoderainformacoes/screens/otpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +11,8 @@ class SignUpController extends GetxController {
   final password = TextEditingController();
   final fullname = TextEditingController();
   final celular = TextEditingController();
+  final isLoading = false.obs;
+  GlobalKey<FormState> signFormKey = GlobalKey<FormState>();
 
   void dispose() {
   email.dispose();
@@ -31,12 +32,39 @@ class SignUpController extends GetxController {
   }
 
   Future<void> createUser(User user) async{
-    await userRepository.createUser(user);
-    phoneAuthentication(user.celular);
-    Get.to(() => const OTPScreen());
+    try {
+      isLoading.value = true;
+      if (!signFormKey.currentState!.validate()) {
+        isLoading.value = false;
+        return;
+      }
+
+      //SignUpController.instance.phoneAuthentication(controller.celular.text.trim);
+      //Get.to(() => const OTPScreen());
+
+      //final user = UserModel{
+      //  email: email.text.trim();
+      //  password: password.text.trim();
+      //  fullname: fulname.text.trim();
+      //  celular: celular.text.trim();
+      //};
+
+      final auth = AuthRepository.instance;
+      await AuthRepository.instance.createUserWithEmailAndPassword(user.email, user.password);
+      await UserRepository.instance.createUser(user);
+      auth.setInitialScreen(auth.firebaseUser);
+
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar("erro", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 3));
+    }
   }
 
-  void phoneAuthentication(String celular){
-    AuthRepository.instance.phoneAuthentication(celular);
+  Future<void> phoneAuthentication(String celular) async {
+    try {
+      //await AuthRepository.instance.phoneAuthentication(celular);
+    } catch (e) {
+      throw e.toString;
+    }
   }
 }

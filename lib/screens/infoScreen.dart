@@ -1,4 +1,4 @@
-import 'package:empoderainformacoes/controllers/updateProfileController.dart';
+import 'package:empoderainformacoes/controllers/profileController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/userModel.dart';

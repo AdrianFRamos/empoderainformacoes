@@ -11,7 +11,7 @@ class ProfilerController extends GetxController {
   final _userRepository = Get.put(UserRepository());
 
   Future<User> getUserData() async {
-    final email = _authRepository.firebaseUser.value?.email;
+    final email = _authRepository.firebaseUser?.email;
     if (email != null) {
       return _userRepository.getUserDetails(email);
     }else{
@@ -23,4 +23,9 @@ class ProfilerController extends GetxController {
   Future<List<User>> getAllUser() async{
     return await _userRepository.allUser();
   }
+
+  updateRecord(User user) async {
+    await _userRepository.updateUser(user);
+  }
+
 }

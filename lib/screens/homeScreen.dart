@@ -1,5 +1,5 @@
 import 'package:empoderainformacoes/const/colors.dart';
-import 'package:empoderainformacoes/widgets/appBarWidget.dart';
+import 'package:empoderainformacoes/widgets/homeBarWidget.dart';
 import 'package:empoderainformacoes/widgets/grandesAreasWidgets.dart';
 import 'package:empoderainformacoes/widgets/pequenasAreasWidget.dart';
 import 'package:empoderainformacoes/widgets/recentesWidget.dart';

@@ -17,19 +17,25 @@ class CadInfoScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8),
-          child: FutureBuilder(
-            future: controller.allInfo(), 
-            builder: (context, snapshot){
-              final response = CheckMultiRecordWidget(snapshot: snapshot);
-              if (response != null) return response;
-
-              final informacoes = snapshot.data!;
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: informacoes.length,
-                itemBuilder: (_, index) => InfoWidget(onTap: () {  }, informacoes: ,),
-              ); 
-            }
+          child: Obx(
+            () => FutureBuilder(
+              key: Key(controller.refreshData.toString()),
+              future: controller.allInfo(), 
+              builder: (context, snapshot){
+                final response = CheckMultiRecordWidget(snapshot: snapshot);
+                // ignore: unnecessary_null_comparison
+                if (response != null) return response;
+            
+                final informacoes = snapshot.data!;
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: informacoes.length,
+                  itemBuilder: (_, index) => InfoWidget(
+                    informacoes: informacoes[index],
+                  ),
+                ); 
+              }
+            ),
           ),
         ),
       ),

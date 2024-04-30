@@ -1,5 +1,5 @@
 // ignore_for_file: file_names
-import 'package:empoderainformacoes/screens/loginScreen.dart';
+import 'package:empoderainformacoes/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -64,7 +64,7 @@ class IntroScreen extends StatelessWidget {
             ),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+                Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange.shade900,

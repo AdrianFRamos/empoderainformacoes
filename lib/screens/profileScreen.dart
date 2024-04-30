@@ -1,3 +1,4 @@
+import 'package:empoderainformacoes/screens/allInfoScreen.dart';
 import 'package:empoderainformacoes/screens/homeScreen.dart';
 import 'package:empoderainformacoes/screens/infoScreen.dart';
 import 'package:empoderainformacoes/screens/updateprofileScreen.dart';
@@ -127,6 +128,11 @@ class ProfileScreen extends StatelessWidget {
               Divider(),
               SizedBox(
                 height: 10,
+              ),
+              ProfileMenuWidget(
+                title: "Cadastrar Informações",
+                icon: Icons.info_outline,
+                onPress: () => Get.to(() => AllInfoScreen()), 
               ),
               ProfileMenuWidget(
                 title: "Informações",

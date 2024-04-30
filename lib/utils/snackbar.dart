@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class snackBar extends GetxController {
+  
   static sucessSnackBar({required title, message}){
     Get.snackbar(
       title, 

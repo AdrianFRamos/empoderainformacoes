@@ -32,8 +32,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-  
+
   @override
-  // TODO: implement preferredSize
-  Size get preferredSize => throw UnimplementedError();
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

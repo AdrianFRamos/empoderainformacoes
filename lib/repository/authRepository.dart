@@ -1,7 +1,6 @@
 import 'package:empoderainformacoes/middleware/loginErros.dart';
 import 'package:empoderainformacoes/screens/homeScreen.dart';
 import 'package:empoderainformacoes/screens/loginScreen.dart';
-import 'package:empoderainformacoes/screens/mailScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -30,10 +29,12 @@ class AuthRepository extends GetxController {
 
   setInitialScreen(User? user) {
     user == null 
-      ? Get.offAll(() => const LoginScreen()) 
+      //? Get.offAll(() => const LoginScreen()) 
+      ? Get.offAll(() => const HomeScreen()) 
       : user.emailVerified 
         ? Get.offAll(() => const HomeScreen()) 
-        : Get.offAll(() => const MailScreen());
+      //  : Get.offAll(() => const MailScreen());
+        : Get.offAll(() => const HomeScreen());
   }
 
 

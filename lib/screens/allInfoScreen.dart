@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/infoController.dart';
+import '../models/informacoesModel.dart';
 import '../widgets/checkMultiRecordWidget.dart';
 import '../widgets/infoWidget.dart';
 
@@ -24,17 +25,23 @@ class AllInfoScreen extends StatelessWidget {
             () => FutureBuilder(
               key: Key(controller.refreshData.value.toString()),
               future: controller.allInfo(), 
-              builder: (context, snapshot){
-                final response = CheckMultiRecordWidget(snapshot: snapshot);
-                if (response != null) return response;
-                final informacoes = snapshot.data!;
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: informacoes.length,
-                  itemBuilder: (_, index) => InfoWidget(
-                    informacoes: informacoes[index],
-                  ),
-                ); 
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(); 
+                } else if (snapshot.hasError) {
+                  return Text('Erro ao buscar dados: ${snapshot.error}');
+                } else if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
+                  return Text('Nenhum dado encontrado'); 
+                } else {
+                  final informacoes = snapshot.data as List<InfoModel>;
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: informacoes.length,
+                    itemBuilder: (context, index) => InfoWidget(
+                      informacoes: informacoes[index],
+                    ),
+                  ); 
+                }
               }
             ),
           ),

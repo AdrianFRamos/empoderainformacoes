@@ -1,6 +1,5 @@
 import 'package:empoderainformacoes/models/informacoesModel.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class  InfoWidget extends StatelessWidget {
   const InfoWidget({super.key, required this.informacoes});
@@ -9,14 +8,16 @@ class  InfoWidget extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => InkWell(
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      padding: EdgeInsets.only(top: 5, bottom: 5),
+      child: InkWell(
         child: Container(
           padding: EdgeInsets.all(8),
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.blueAccent,
-            borderRadius: BorderRadius.circular(double.infinity), 
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Stack(
             children: <Widget>[
@@ -32,7 +33,7 @@ class  InfoWidget extends StatelessWidget {
                     informacoes.grandArea,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.displayMedium,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(height: 5),
                   Text(
@@ -56,5 +57,4 @@ class  InfoWidget extends StatelessWidget {
       ),
     );
   }
-  
 }

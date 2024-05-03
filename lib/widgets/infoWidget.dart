@@ -1,4 +1,3 @@
-import 'package:empoderainformacoes/controllers/infoController.dart';
 import 'package:empoderainformacoes/models/informacoesModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,8 +9,6 @@ class  InfoWidget extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    final controller = InfoController.instance;
-
     return Obx(
       () => InkWell(
         child: Container(
@@ -47,6 +44,9 @@ class  InfoWidget extends StatelessWidget {
                   Text(
                     informacoes.titulo,
                     softWrap: true,
+                    style: TextStyle(
+                      color: Colors.black
+                    ),
                   ),
                 ],
               )

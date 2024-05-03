@@ -53,20 +53,20 @@ class InfoModel {
     );
   }
 
-  factory InfoModel.fromDocumentSnapshot(DocumentSnapshot snapshot){
-    final data = snapshot.data as Map<String, dynamic>;
+  factory InfoModel.fromDocumentSnapshot(DocumentSnapshot snapshot) {
+  final data = snapshot.data() as Map<String, dynamic>;
 
-    return InfoModel(
-      id: snapshot.id, 
-      grandArea: data['grandArea'] ?? '',
-      pequeArea: data['pequeArea'] ?? '',
-      titulo: data['titulo'] ?? '',
-      descricao: data['descricao'] ?? '',
-      endereco: data['endereco'] ?? '',
-      telefone: data['telefone'] ?? '',
-      maisInfo: data['maisInfo'] ?? '', 
-      dateTime: (data['DateTime'] as Timestamp).toDate(),
-    );
-  }
+  return InfoModel(
+    id: snapshot.id, 
+    grandArea: data['grandArea'] ?? '',
+    pequeArea: data['pequeArea'] ?? '',
+    titulo: data['titulo'] ?? '',
+    descricao: data['descricao'] ?? '',
+    endereco: data['endereco'] ?? '',
+    telefone: data['telefone'].toString(),
+    maisInfo: data['maisInfo'] ?? '', 
+    dateTime: data['DateTime'] != null ? (data['DateTime'] as Timestamp).toDate() : null,
+  );
+}
 }
 

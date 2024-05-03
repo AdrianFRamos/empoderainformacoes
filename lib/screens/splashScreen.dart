@@ -1,5 +1,5 @@
 // ignore_for_file: file_names
-import 'package:empoderainformacoes/screens/introScreen.dart';
+import 'package:empoderainformacoes/screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -16,8 +16,8 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState(){
-    timer = Timer(const Duration(seconds: 2),(){
-      Navigator.of(context).pushReplacementNamed(IntroScreen.routeName);
+    timer = Timer(const Duration(seconds: 5),(){
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     });
     super.initState();
   }

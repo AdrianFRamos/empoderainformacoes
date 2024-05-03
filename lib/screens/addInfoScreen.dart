@@ -90,7 +90,9 @@ class AddInfoScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: (){}, 
+                    onPressed: (){
+                      InfoController.instance.addNewInfo();
+                    }, 
                     child: Text("Salvar")
                   ),
                 )

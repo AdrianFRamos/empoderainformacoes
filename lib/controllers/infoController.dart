@@ -53,7 +53,7 @@ class InfoController extends GetxController {
       final id = await infoRepository.addInfo(informacoes);
       informacoes.id = id;   
 
-      snackBar.sucessSnackBar(title: 'Parabens, informção adicionada com sucesso.');
+      snackBar.sucessSnackBar(title: 'Parabens', message: 'adicionada com sucesso.');
 
       refreshData.toggle();
       resetFormField();
@@ -61,7 +61,7 @@ class InfoController extends GetxController {
       Navigator.of(Get.context!).pop();
 
     } catch (e) {
-      snackBar.errorSnackBar(title: 'Erro, informção não adicionada.');
+      snackBar.errorSnackBar(title: 'Erro', message:'informção não adicionada.');
     }
   }
 

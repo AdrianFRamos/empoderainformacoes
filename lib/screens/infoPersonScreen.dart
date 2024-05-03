@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/userModel.dart';
 
-class InfoScreen extends StatelessWidget {
-  static const routeName = "/infoScreen";
-  const InfoScreen({super.key});
+class InfoPersonScreen extends StatelessWidget {
+  static const routeName = "/infoPersonScreen";
+  const InfoPersonScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

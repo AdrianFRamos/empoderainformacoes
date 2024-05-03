@@ -1,6 +1,6 @@
 import 'package:empoderainformacoes/screens/allInfoScreen.dart';
 import 'package:empoderainformacoes/screens/homeScreen.dart';
-import 'package:empoderainformacoes/screens/infoScreen.dart';
+import 'package:empoderainformacoes/screens/infoPersonScreen.dart';
 import 'package:empoderainformacoes/screens/updateprofileScreen.dart';
 import 'package:empoderainformacoes/utils/helper.dart';
 import 'package:empoderainformacoes/widgets/profileMenuWidget.dart';
@@ -137,7 +137,7 @@ class ProfileScreen extends StatelessWidget {
               ProfileMenuWidget(
                 title: "Informações",
                 icon: Icons.info_outline,
-                onPress: () => Get.to(() => InfoScreen()), 
+                onPress: () => Get.to(() => InfoPersonScreen()), 
               ),
               ProfileMenuWidget(
                 title: "Sair",

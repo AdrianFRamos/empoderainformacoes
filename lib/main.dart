@@ -14,7 +14,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'screens/infoScreen.dart';
+import 'screens/infoPersonScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           )
         )
       ),
-      home: const CircularProgressIndicator(),
+      home: const SplashScreen(),
       routes: {
         SplashScreen.routeName: (context) => const SplashScreen(),
         IntroScreen.routeName: (context) => const IntroScreen(),
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
         OTPScreen.routeName: (context) => const OTPScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
         ProfileScreen.routeName: (context) => const ProfileScreen(),
-        InfoScreen.routeName: (context) => const InfoScreen(),
+        InfoPersonScreen.routeName: (context) => const InfoPersonScreen(),
       },
     );
   }

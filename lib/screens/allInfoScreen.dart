@@ -2,10 +2,8 @@ import 'package:empoderainformacoes/screens/addInfoScreen.dart';
 import 'package:empoderainformacoes/widgets/appBarWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../controllers/infoController.dart';
 import '../models/informacoesModel.dart';
-import '../widgets/checkMultiRecordWidget.dart';
 import '../widgets/infoWidget.dart';
 
 class AllInfoScreen extends StatelessWidget {
@@ -49,7 +47,7 @@ class AllInfoScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blueAccent,
-        onPressed: () => Get.to(() => const AddInfoScreen()),
+        onPressed: () => Get.to(() => AddInfoScreen()),
         child: Icon(Icons.add),
       ),
     );

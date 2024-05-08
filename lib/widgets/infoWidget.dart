@@ -33,7 +33,7 @@ class  InfoWidget extends StatelessWidget {
                     informacoes.grandArea,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   SizedBox(height: 5),
                   Text(

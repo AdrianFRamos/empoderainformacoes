@@ -16,14 +16,20 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState(){
-    timer = Timer(const Duration(seconds: 5),(){
-      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
-    });
     super.initState();
   }
 
   @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    timer = Timer(const Duration(seconds: 5),(){
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+    });
     return Container(
       decoration: const BoxDecoration(color: Colors.white),
       child: Column(

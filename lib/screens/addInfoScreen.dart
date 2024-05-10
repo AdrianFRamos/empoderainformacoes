@@ -8,11 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddInfoScreen extends StatelessWidget {
+class AddInfoScreen extends StatefulWidget {
   AddInfoScreen({super.key});
   static const routeName = "/addInfoScreen";
 
+  @override
+  State<AddInfoScreen> createState() => _AddInfoScreenState();
+}
+
+class _AddInfoScreenState extends State<AddInfoScreen> {
   final FirebaseStorage storage = FirebaseStorage.instance;
+  bool uploading = false;
+  double total = 0;
 
   Future<XFile?> getImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -20,11 +27,12 @@ class AddInfoScreen extends StatelessWidget {
     return image;
   }
 
-  Future<void> uploadImage(String path) async {
+  Future<UploadTask> uploadImage(String path) async {
     File file = File(path);
     try {
       String ref = 'images/img-${DateTime.now().toString()}.jpg';
-      await storage.ref(ref).putFile(file);
+      var imageUrl = storage.ref(ref).putFile(file);
+      return Future.value(imageUrl);
     } on FirebaseException catch (e) {
       throw Exception('Erro no upload: ${e.code}');
     }
@@ -33,7 +41,18 @@ class AddInfoScreen extends StatelessWidget {
   selectUploadImage() async {
     XFile? file = await getImage();
     if(file != null){
-      await uploadImage(file.path);
+      UploadTask task = await uploadImage(file.path);
+
+      task.snapshotEvents.listen((TaskSnapshot snapshot) async {
+        if(snapshot.state == TaskState.running){
+          setState(() {
+            uploading = true;
+            total = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          });
+        } else if (snapshot.state == TaskState.success){
+          setState(() => uploading = false);
+        }
+      });
     }
   }
 
@@ -122,7 +141,21 @@ class AddInfoScreen extends StatelessWidget {
                   margin: EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      IconButton(
+                      uploading
+                      ? const Padding(
+                        padding: EdgeInsets.only(right: 12),
+                        child: Center(
+                          child: SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 3,
+                              color: Colors.amber,
+                            ),
+                          ),
+                        ),
+                      ) 
+                      : IconButton(
                         onPressed: selectUploadImage,
                         icon: const Icon(Icons.upload),
                       ),

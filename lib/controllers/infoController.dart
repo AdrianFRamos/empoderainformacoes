@@ -23,7 +23,6 @@ class InfoController extends GetxController {
   Future<List<InfoModel>> allInfo() async {
     try {
       final informacoes = await infoRepository.fetchInfo();
-      //selecionarInfo.value = informacoes.firstWhere((element) => element.selecionarInfo, orElse: () => InfoModel.empty());
       return informacoes;
     } catch (e) {
       snackBar.errorSnackBar(title: 'Um erro ocorreu. Tente novamente', message: e.toString());
@@ -32,40 +31,76 @@ class InfoController extends GetxController {
   }
 
   Future addNewInfo() async {
-
     try {
-        //initloading
       if (!infoFormKey.currentState!.validate()) {
-        //stoploading
         return;
       }
-      
+
       final informacoes = InfoModel(
-        id: '', 
-        grandArea: grandArea.text.trim(), 
-        pequeArea: pequeArea.text.trim(), 
-        titulo: titulo.text.trim(), 
-        descricao: descricao.text.trim(), 
-        endereco: endereco.text.trim(), 
-        telefone: telefone.text.trim(), 
-        maisInfo: maisInfo.text.trim()
+        id: '',
+        grandArea: grandArea.text.trim(),
+        pequeArea: pequeArea.text.trim(),
+        titulo: titulo.text.trim(),
+        descricao: descricao.text.trim(),
+        endereco: endereco.text.trim(),
+        telefone: telefone.text.trim(),
+        maisInfo: maisInfo.text.trim(),
       );
       final id = await infoRepository.addInfo(informacoes);
-      informacoes.id = id;   
+      informacoes.id = id;
 
-      snackBar.sucessSnackBar(title: 'Parabens', message: 'adicionada com sucesso.');
+      snackBar.sucessSnackBar(title: 'Parabéns', message: 'Informação adicionada com sucesso.');
 
       refreshData.toggle();
       resetFormField();
 
       Navigator.of(Get.context!).pop();
-
     } catch (e) {
-      snackBar.errorSnackBar(title: 'Erro', message:'informção não adicionada.');
+      snackBar.errorSnackBar(title: 'Erro', message: 'Informação não adicionada.');
     }
   }
 
-  void resetFormField(){
+  void loadInfo(InfoModel info) {
+    grandArea.text = info.grandArea;
+    pequeArea.text = info.pequeArea;
+    titulo.text = info.titulo;
+    descricao.text = info.descricao;
+    endereco.text = info.endereco;
+    telefone.text = info.telefone;
+    maisInfo.text = info.maisInfo;
+  }
+
+  Future updateInfo(String id) async {
+    try {
+      if (!infoFormKey.currentState!.validate()) {
+        return;
+      }
+
+      final informacoes = InfoModel(
+        id: id,
+        grandArea: grandArea.text.trim(),
+        pequeArea: pequeArea.text.trim(),
+        titulo: titulo.text.trim(),
+        descricao: descricao.text.trim(),
+        endereco: endereco.text.trim(),
+        telefone: telefone.text.trim(),
+        maisInfo: maisInfo.text.trim(),
+      );
+
+      await infoRepository.updateInfo(informacoes);
+
+      snackBar.sucessSnackBar(title: 'Parabéns', message: 'Informação atualizada com sucesso.');
+
+      refreshData.toggle();
+      resetFormField();
+
+      Navigator.of(Get.context!).pop();
+    } catch (e) {
+      snackBar.errorSnackBar(title: 'Erro', message: 'Informação não atualizada.');
+    }
+  }
+
+  void resetFormField() {
     grandArea.clear();
     pequeArea.clear();
     titulo.clear();
@@ -76,4 +111,3 @@ class InfoController extends GetxController {
     infoFormKey.currentState?.reset();
   }
 }
-

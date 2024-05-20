@@ -1,7 +1,10 @@
 import 'package:empoderainformacoes/models/informacoesModel.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../controllers/infoController.dart';
+import '../screens/editInfoScreen.dart';
 
-class  InfoWidget extends StatelessWidget {
+class InfoWidget extends StatelessWidget {
   const InfoWidget({super.key, required this.informacoes});
 
   final InfoModel informacoes;
@@ -24,7 +27,16 @@ class  InfoWidget extends StatelessWidget {
               Positioned(
                 right: 5,
                 top: 0,
-                child: Icon(Icons.bookmark)
+                child: IconButton(
+                  icon: Icon(Icons.edit_outlined),
+                  onPressed: () {
+                    final infoController = Get.find<InfoController>();
+                    infoController.loadInfo(informacoes);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => EditInfoScreen(info: informacoes),
+                    ));
+                  },
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,11 +58,11 @@ class  InfoWidget extends StatelessWidget {
                     informacoes.titulo,
                     softWrap: true,
                     style: TextStyle(
-                      color: Colors.black
+                      color: Colors.black,
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

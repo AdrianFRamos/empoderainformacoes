@@ -25,4 +25,12 @@ class InfoRepository extends GetxController {
       throw 'Ocorreu algo de errado ao adicionar as informações. Tente novamente';
     }
   }
+
+  Future<void> updateInfo(InfoModel info) async {
+    try {
+      await _db.collection('Informacoes').doc(info.id).update(info.toJson());
+    } catch (e) {
+      throw 'Ocorreu algo de errado ao atualizar as informações. Tente novamente';
+    }
+  }
 }

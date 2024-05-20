@@ -1,11 +1,8 @@
 import 'dart:io';
-
 import 'package:empoderainformacoes/controllers/infoController.dart';
 import 'package:empoderainformacoes/widgets/appBarWidget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddInfoScreen extends StatefulWidget {

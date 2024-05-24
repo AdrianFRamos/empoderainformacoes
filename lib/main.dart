@@ -38,13 +38,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.orange,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
+            backgroundColor: WidgetStateProperty.all(
              AppColor.orange,
             ),
-            shape: MaterialStateProperty.all(
+            shape: WidgetStateProperty.all(
               const StadiumBorder(),
             ),
-            elevation: MaterialStateProperty.all(0)
+            elevation: WidgetStateProperty.all(0)
           )
         ),
         textTheme: const TextTheme(
@@ -73,5 +73,3 @@ class MyApp extends StatelessWidget {
     );
   }
 } 
-
-//teste

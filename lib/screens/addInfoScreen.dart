@@ -98,6 +98,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                   height: 15,
                 ),
                 TextFormField(
+                  //aumentar campo para texto 
                   controller: controller.descricao,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.supervisor_account), 
@@ -158,6 +159,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                       ),
                       SizedBox(width: 10),
                       ElevatedButton(
+                        // ao adicionar uma nova informação não esta limpando a seleção 
                         onPressed: () {
                           InfoController.instance.addNewInfo();
                         },

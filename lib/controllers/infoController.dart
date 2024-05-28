@@ -14,6 +14,7 @@ class InfoController extends GetxController {
   final endereco = TextEditingController();
   final telefone = TextEditingController();
   final maisInfo = TextEditingController();
+  final TextEditingController _cleanController = TextEditingController();
   GlobalKey<FormState> infoFormKey = GlobalKey<FormState>();
 
   RxBool refreshData = true.obs;
@@ -109,5 +110,6 @@ class InfoController extends GetxController {
     telefone.clear();
     maisInfo.clear();
     infoFormKey.currentState?.reset();
+    _cleanController.clear();
   }
 }

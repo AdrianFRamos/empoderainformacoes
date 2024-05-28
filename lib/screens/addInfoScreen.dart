@@ -70,7 +70,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                 TextFormField(
                   controller: controller.grandArea,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.supervisor_account), 
+                    prefixIcon: Icon(Icons.text_snippet), 
                     labelText: 'Grande area'
                   ),
                 ),
@@ -80,7 +80,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                 TextFormField(
                   controller: controller.pequeArea,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.supervisor_account), 
+                    prefixIcon: Icon(Icons.text_snippet), 
                     labelText: 'Pequena area'
                   ),
                 ),
@@ -90,7 +90,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                 TextFormField(
                   controller: controller.titulo,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.supervisor_account), 
+                    prefixIcon: Icon(Icons.title), 
                     labelText: 'Titulo'
                   ),
                 ),
@@ -98,12 +98,14 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                   height: 15,
                 ),
                 TextFormField(
-                  //aumentar campo para texto 
+                  
                   controller: controller.descricao,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.supervisor_account), 
+                    prefixIcon: Icon(Icons.book_sharp), 
                     labelText: 'descricao'
                   ),
+                  maxLines: null, 
+                  keyboardType: TextInputType.multiline,
                 ),
                 SizedBox(
                   height: 15,
@@ -111,7 +113,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                 TextFormField(
                   controller: controller.endereco,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.supervisor_account), 
+                    prefixIcon: Icon(Icons.map), 
                     labelText: 'endereco'
                   ),
                 ),
@@ -121,7 +123,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                 TextFormField(
                   controller: controller.telefone,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.supervisor_account), 
+                    prefixIcon: Icon(Icons.phone), 
                     labelText: 'Telefone'
                   ),
                 ),
@@ -131,7 +133,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                 TextFormField(
                   controller: controller.maisInfo,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.supervisor_account), 
+                    prefixIcon: Icon(Icons.add), 
                     labelText: 'Mais informacoes'
                   ),
                 ),
@@ -159,7 +161,6 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                       ),
                       SizedBox(width: 10),
                       ElevatedButton(
-                        // ao adicionar uma nova informação não esta limpando a seleção 
                         onPressed: () {
                           InfoController.instance.addNewInfo();
                         },

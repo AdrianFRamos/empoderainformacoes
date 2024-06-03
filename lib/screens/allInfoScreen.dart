@@ -13,23 +13,23 @@ class AllInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(InfoController());
-    
+
     return Scaffold(
-      appBar: AppBarWidget(showBackArrow: true, title: Text('Todas as Informacoes')),
+      appBar: AppBarWidget(showBackArrow: true, title: Text('Todas as Informações')),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Obx(
             () => FutureBuilder(
               key: Key(controller.refreshData.value.toString()),
-              future: controller.allInfo(), 
+              future: controller.allInfo(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator(); 
+                  return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Text('Erro ao buscar dados: ${snapshot.error}');
                 } else if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
-                  return Text('Nenhum dado encontrado'); 
+                  return Text('Nenhum dado encontrado');
                 } else {
                   final informacoes = snapshot.data as List<InfoModel>;
                   return ListView.builder(
@@ -38,9 +38,9 @@ class AllInfoScreen extends StatelessWidget {
                     itemBuilder: (context, index) => InfoWidget(
                       informacoes: informacoes[index],
                     ),
-                  ); 
+                  );
                 }
-              }
+              },
             ),
           ),
         ),

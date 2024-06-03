@@ -100,7 +100,19 @@ class InfoController extends GetxController {
       snackBar.errorSnackBar(title: 'Erro', message: 'Informação não atualizada.');
     }
   }
+  
+  Future deleteInfo(String id) async {
+    try {
+      await infoRepository.deleteInfo(id);
 
+      snackBar.sucessSnackBar(title: 'Parabéns', message: 'Informação excluída com sucesso.');
+
+      refreshData.toggle();
+    } catch (e) {
+      snackBar.errorSnackBar(title: 'Erro', message: 'Informação não excluída.');
+    }
+  }
+  
   void resetFormField() {
     grandArea.clear();
     pequeArea.clear();

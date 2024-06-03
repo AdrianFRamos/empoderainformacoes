@@ -8,9 +8,11 @@ class InfoWidget extends StatelessWidget {
   const InfoWidget({super.key, required this.informacoes});
 
   final InfoModel informacoes;
-  
+
   @override
   Widget build(BuildContext context) {
+    final infoController = Get.find<InfoController>();
+
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -25,16 +27,28 @@ class InfoWidget extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               Positioned(
-                right: 5,
+                right: 45, // Adjust the position to make space for the delete icon
                 top: 0,
                 child: IconButton(
                   icon: Icon(Icons.edit_outlined),
                   onPressed: () {
-                    final infoController = Get.find<InfoController>();
                     infoController.loadInfo(informacoes);
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => EditInfoScreen(info: informacoes),
                     ));
+                  },
+                ),
+              ),
+              Positioned(
+                right: 5,
+                top: 0,
+                child: IconButton(
+                  icon: Icon(Icons.delete_outline),
+                  onPressed: () async {
+                    bool confirmDelete = await _showConfirmationDialog(context);
+                    if (confirmDelete) {
+                      await infoController.deleteInfo(informacoes.id);
+                    }
                   },
                 ),
               ),
@@ -68,5 +82,25 @@ class InfoWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> _showConfirmationDialog(BuildContext context) async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Confirmar exclusão'),
+        content: Text('Tem certeza de que deseja excluir esta informação?'),
+        actions: [
+          TextButton(
+            child: Text('Cancelar'),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          TextButton(
+            child: Text('Excluir'),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+        ],
+      ),
+    ) ?? false;
   }
 }

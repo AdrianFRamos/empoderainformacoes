@@ -33,4 +33,12 @@ class InfoRepository extends GetxController {
       throw 'Ocorreu algo de errado ao atualizar as informações. Tente novamente';
     }
   }
+
+  Future<void> deleteInfo(String id) async {
+    try {
+      await _db.collection('Informacoes').doc(id).delete();
+    } catch (e) {
+      throw 'Ocorreu algo de errado ao deletar as informações. Tente novamente';
+    }
+  }
 }

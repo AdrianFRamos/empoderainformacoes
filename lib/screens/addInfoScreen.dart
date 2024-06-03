@@ -37,19 +37,26 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
 
   selectUploadImage() async {
     XFile? file = await getImage();
-    if(file != null){
+    if (file != null) {
       UploadTask task = await uploadImage(file.path);
 
       task.snapshotEvents.listen((TaskSnapshot snapshot) async {
-        if(snapshot.state == TaskState.running){
+        if (snapshot.state == TaskState.running) {
           setState(() {
             uploading = true;
             total = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           });
-        } else if (snapshot.state == TaskState.success){
+        } else if (snapshot.state == TaskState.success) {
           setState(() => uploading = false);
         }
       });
+    }
+  }
+
+  void _submitForm() {
+    final controller = InfoController.instance;
+    if (controller.infoFormKey.currentState!.validate()) {
+      controller.addNewInfo();
     }
   }
 
@@ -71,55 +78,44 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                   controller: controller.grandArea,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.text_snippet), 
-                    labelText: 'Grande area'
+                    labelText: 'Grande área'
                   ),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
+                SizedBox(height: 15),
                 TextFormField(
                   controller: controller.pequeArea,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.text_snippet), 
-                    labelText: 'Pequena area'
+                    labelText: 'Pequena área'
                   ),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
+                SizedBox(height: 15),
                 TextFormField(
                   controller: controller.titulo,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.title), 
-                    labelText: 'Titulo'
+                    labelText: 'Título'
                   ),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
+                SizedBox(height: 15),
                 TextFormField(
-                  
                   controller: controller.descricao,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.book_sharp), 
-                    labelText: 'descricao'
+                    labelText: 'Descrição'
                   ),
                   maxLines: null, 
                   keyboardType: TextInputType.multiline,
                 ),
-                SizedBox(
-                  height: 15,
-                ),
+                SizedBox(height: 15),
                 TextFormField(
                   controller: controller.endereco,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.map), 
-                    labelText: 'endereco'
+                    labelText: 'Endereço'
                   ),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
+                SizedBox(height: 15),
                 TextFormField(
                   controller: controller.telefone,
                   decoration: InputDecoration(
@@ -127,14 +123,12 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                     labelText: 'Telefone'
                   ),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
+                SizedBox(height: 15),
                 TextFormField(
                   controller: controller.maisInfo,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.add), 
-                    labelText: 'Mais informacoes'
+                    labelText: 'Mais informações'
                   ),
                 ),
                 Container(
@@ -161,16 +155,14 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                       ),
                       SizedBox(width: 10),
                       ElevatedButton(
-                        onPressed: () {
-                          InfoController.instance.addNewInfo();
-                        },
+                        onPressed: _submitForm,
                         child: Text("Salvar"),
                       ),
                     ],
                   ),
                 ),
               ],
-            )
+            ),
           ),
         ),
       ),

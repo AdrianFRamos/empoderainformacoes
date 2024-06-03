@@ -4,6 +4,7 @@ import 'package:empoderainformacoes/widgets/appBarWidget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AddInfoScreen extends StatefulWidget {
   AddInfoScreen({super.key});
@@ -60,6 +61,24 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
     }
   }
 
+  Future<void> _launchMaps(String address) async {
+    final encodedAddress = Uri.encodeComponent(address);
+    final Uri url = Uri.parse('https://www.google.com/maps/search/?api=1&query=$encodedAddress'); 
+    if (!await launchUrl(url)) { 
+      await launchUrl(url);
+    } else {
+      throw 'Não foi possível abrir o Google Maps';
+    }
+  }
+
+  Future<void> _launchPhoneCall(String phoneNumber) async {
+    final Uri phoneUrl = Uri.parse('tel:$phoneNumber');
+    if (await launchUrl(phoneUrl)) {
+      await launchUrl(phoneUrl);
+    } else {
+      throw 'Não foi possível fazer a ligação telefônica';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final controller = InfoController.instance;
@@ -77,7 +96,10 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                 TextFormField(
                   controller: controller.grandArea,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.text_snippet), 
+                    prefixIcon: Icon(
+                      Icons.text_snippet,
+                      color: Colors.black,
+                    ), 
                     labelText: 'Grande área'
                   ),
                 ),
@@ -85,7 +107,10 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                 TextFormField(
                   controller: controller.pequeArea,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.text_snippet), 
+                    prefixIcon: Icon(
+                      Icons.text_snippet,
+                      color: Colors.black,
+                    ), 
                     labelText: 'Pequena área'
                   ),
                 ),
@@ -93,15 +118,22 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                 TextFormField(
                   controller: controller.titulo,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.title), 
+                    prefixIcon: Icon(
+                      Icons.title,
+                      color: Colors.black,
+                    ), 
                     labelText: 'Título'
                   ),
                 ),
                 SizedBox(height: 15),
                 TextFormField(
+
                   controller: controller.descricao,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.book_sharp), 
+                    prefixIcon: Icon(
+                      Icons.book_sharp,
+                      color: Colors.black,
+                    ), 
                     labelText: 'Descrição'
                   ),
                   maxLines: null, 
@@ -111,23 +143,34 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                 TextFormField(
                   controller: controller.endereco,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.map), 
-                    labelText: 'Endereço'
+                    prefixIcon: Icon(
+                      Icons.map,
+                      color: Colors.black,
+                    ), 
+                    labelText: 'Endereço',
                   ),
+                  onTap: () => _launchMaps(controller.endereco.text),
                 ),
                 SizedBox(height: 15),
                 TextFormField(
                   controller: controller.telefone,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.phone), 
+                    prefixIcon: Icon(
+                      Icons.phone,
+                      color: Colors.black,
+                    ), 
                     labelText: 'Telefone'
                   ),
+                  onTap: () => _launchPhoneCall(controller.telefone.text),
                 ),
                 SizedBox(height: 15),
                 TextFormField(
                   controller: controller.maisInfo,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.add), 
+                    prefixIcon: Icon(
+                      Icons.add,
+                      color: Colors.black,
+                    ), 
                     labelText: 'Mais informações'
                   ),
                 ),

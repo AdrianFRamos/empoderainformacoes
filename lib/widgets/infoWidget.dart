@@ -27,10 +27,13 @@ class InfoWidget extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               Positioned(
-                right: 45, // Adjust the position to make space for the delete icon
+                right: 45, 
                 top: 0,
                 child: IconButton(
-                  icon: Icon(Icons.edit_outlined),
+                  icon: Icon(
+                    Icons.edit_outlined,
+                    color: Colors.white,
+                    ),
                   onPressed: () {
                     infoController.loadInfo(informacoes);
                     Navigator.of(context).push(MaterialPageRoute(
@@ -43,7 +46,10 @@ class InfoWidget extends StatelessWidget {
                 right: 5,
                 top: 0,
                 child: IconButton(
-                  icon: Icon(Icons.delete_outline),
+                  icon: Icon(
+                    Icons.delete_outline,
+                    color: Colors.white,
+                  ),
                   onPressed: () async {
                     bool confirmDelete = await _showConfirmationDialog(context);
                     if (confirmDelete) {

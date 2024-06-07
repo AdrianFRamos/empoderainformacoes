@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/informacoesModel.dart';
 
 class ThirdScreen extends StatelessWidget {
@@ -18,22 +19,66 @@ class ThirdScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final info = infoList[index];
           return ListTile(
-            title: Text(info.titulo),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Descrição: ${info.descricao}'),
-                Text('Endereço: ${info.endereco}'),
-                Text('Telefone: ${info.telefone}'),
-                Text('Mais informações: ${info.maisInfo}'),
+                _InfoDetail(title: 'Titulo', content: info.titulo),
+                _InfoDetail(title: 'Descrição', content: info.descricao),
+                _InfoDetail(title: 'Endereço', content: info.endereco),
+                _InfoDetail(title: 'Telefone', content: info.telefone),
+                _InfoDetail(title: 'Mais Informações', content: info.maisInfo),
               ],
             ),
             onTap: () {
-              // Aqui você pode adicionar a lógica para lidar com o clique em um item
+              _handleTap(info);
             },
           );
         },
       ),
+    );
+  }
+
+  void _handleTap(InfoModel info) async {
+    if (await canLaunch(info.endereco)) {
+      await launch(info.endereco);
+    } else {
+      throw 'Could not launch ${info.endereco}';
+    }
+
+    if (await canLaunch('tel:${info.telefone}')) {
+      await launch('tel:${info.telefone}');
+    } else {
+      throw 'Could not launch tel:${info.telefone}';
+    }
+  }
+}
+
+class _InfoDetail extends StatelessWidget {
+  final String title;
+  final String content;
+
+  const _InfoDetail({
+    Key? key,
+    required this.title,
+    required this.content,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 8),
+        Text(
+          content,
+          style: TextStyle(fontSize: 16),
+        ),
+        SizedBox(height: 16),
+      ],
     );
   }
 }

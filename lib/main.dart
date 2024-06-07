@@ -8,8 +8,10 @@ import 'package:empoderainformacoes/screens/loginScreen.dart';
 import 'package:empoderainformacoes/screens/mailScreen.dart';
 import 'package:empoderainformacoes/screens/otpScreen.dart';
 import 'package:empoderainformacoes/screens/profileScreen.dart';
+import 'package:empoderainformacoes/screens/secondScreen.dart';
 import 'package:empoderainformacoes/screens/signUpScreen.dart';
 import 'package:empoderainformacoes/screens/splashScreen.dart';
+import 'package:empoderainformacoes/screens/thirdScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -67,6 +69,8 @@ class MyApp extends StatelessWidget {
         MailScreen.routeName: (context) => const MailScreen(),
         OTPScreen.routeName: (context) => const OTPScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
+        SecondScreen.routeName: (context) => const SecondScreen(),
+        ThirdScreen.routeName: (context) => const ThirdScreen(infoList: []),
         ProfileScreen.routeName: (context) => const ProfileScreen(),
         InfoPersonScreen.routeName: (context) => const InfoPersonScreen(),
       },

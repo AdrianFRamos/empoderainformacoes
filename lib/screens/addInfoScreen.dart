@@ -149,7 +149,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                     ), 
                     labelText: 'Endereço',
                   ),
-                  onTap: () => _launchMaps(controller.endereco.text),
+                  //onTap: () => _launchMaps(controller.endereco.text),
                 ),
                 SizedBox(height: 15),
                 TextFormField(
@@ -161,7 +161,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                     ), 
                     labelText: 'Telefone'
                   ),
-                  onTap: () => _launchPhoneCall(controller.telefone.text),
+                  //onTap: () => _launchPhoneCall(controller.telefone.text),
                 ),
                 SizedBox(height: 15),
                 TextFormField(

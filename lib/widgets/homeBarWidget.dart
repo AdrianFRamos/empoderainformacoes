@@ -10,31 +10,25 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: const Icon(Icons.menu_sharp, color: AppColor.primary,),
-      title: Text(
-        "Home",
-        style: Theme.of(context).textTheme.headlineSmall,
+      leading: const Icon(Icons.notifications, color: AppColor.primary,),
+      title: Row(
+        children: [
+          CircleAvatar(
+            backgroundImage: AssetImage('assets/icons/mulheraceno.png'),
+          ),
+          SizedBox(width: 8),
+          Text('E-MPODERA'),
+        ],
       ),
+      backgroundColor: palePink,
       centerTitle: true,
-      elevation: 0,
-      backgroundColor: Colors.transparent,
       actions: <Widget>[
         Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 20, 
-            vertical: 7
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), 
-            color: AppColor.secondary
-          ),
           child: IconButton(
             onPressed: (){
               Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
             }, 
-            icon: const Image(
-              image: AssetImage("assets/icons/mulheraceno.png",),
-            )
+            icon: Icon(Icons.menu),
           ),
         ),
       ],

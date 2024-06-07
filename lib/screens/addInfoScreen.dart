@@ -4,7 +4,6 @@ import 'package:empoderainformacoes/widgets/appBarWidget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AddInfoScreen extends StatefulWidget {
   AddInfoScreen({super.key});
@@ -61,24 +60,6 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
     }
   }
 
-  Future<void> _launchMaps(String address) async {
-    final encodedAddress = Uri.encodeComponent(address);
-    final Uri url = Uri.parse('https://www.google.com/maps/search/?api=1&query=$encodedAddress'); 
-    if (!await launchUrl(url)) { 
-      await launchUrl(url);
-    } else {
-      throw 'Não foi possível abrir o Google Maps';
-    }
-  }
-
-  Future<void> _launchPhoneCall(String phoneNumber) async {
-    final Uri phoneUrl = Uri.parse('tel:$phoneNumber');
-    if (await launchUrl(phoneUrl)) {
-      await launchUrl(phoneUrl);
-    } else {
-      throw 'Não foi possível fazer a ligação telefônica';
-    }
-  }
   @override
   Widget build(BuildContext context) {
     final controller = InfoController.instance;
@@ -149,7 +130,6 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                     ), 
                     labelText: 'Endereço',
                   ),
-                  //onTap: () => _launchMaps(controller.endereco.text),
                 ),
                 SizedBox(height: 15),
                 TextFormField(
@@ -161,7 +141,6 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                     ), 
                     labelText: 'Telefone'
                   ),
-                  //onTap: () => _launchPhoneCall(controller.telefone.text),
                 ),
                 SizedBox(height: 15),
                 TextFormField(

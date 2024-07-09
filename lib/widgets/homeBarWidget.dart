@@ -1,6 +1,7 @@
 import 'package:empoderainformacoes/const/colors.dart';
 import 'package:empoderainformacoes/screens/profileScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({
@@ -10,14 +11,19 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: const Icon(Icons.notifications, color: AppColor.primary,),
+      leading: const Icon(Icons.notifications, color: AppColor.primary, size: 40,),
       title: Row(
         children: [
           CircleAvatar(
             backgroundImage: AssetImage('assets/icons/mulheraceno.png'),
           ),
           SizedBox(width: 8),
-          Text('E-MPODERA'),
+          Text(
+            'E-MPODERA',
+            style: GoogleFonts.bebasNeue(
+              fontSize: 40
+            ),
+          ),
         ],
       ),
       backgroundColor: palePink,
@@ -28,7 +34,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: (){
               Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
             }, 
-            icon: Icon(Icons.menu),
+            icon: Icon(
+              Icons.menu,
+              size: 40,
+            ),
           ),
         ),
       ],

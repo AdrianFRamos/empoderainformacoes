@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../const/colors.dart';
 import '../controllers/infoController.dart';
 import '../models/informacoesModel.dart';
@@ -18,9 +19,9 @@ class HomeScreen extends StatelessWidget {
         return Icons.local_hospital;
       case 'educacao':
         return Icons.school;
-      case 'trabalho':
+      case 'profissional':
         return Icons.work;
-      case 'financeiro':
+      case 'comunidade':
         return Icons.monetization_on;
       default:
         return Icons.question_mark; 
@@ -44,7 +45,10 @@ class HomeScreen extends StatelessWidget {
               Center(
                 child: Text(
                   'Em que podemos ajudar?',
-                  style: TextStyle(color: Colors.black, fontSize: 18),
+                  style: GoogleFonts.libreBaskerville(
+                    color: Colors.black, 
+                    fontSize: 20,
+                  ),
                 ),
               ),
               SizedBox(height: 16),

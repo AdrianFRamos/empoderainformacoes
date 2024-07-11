@@ -7,9 +7,21 @@ import '../models/informacoesModel.dart';
 import '../widgets/homeBarWidget.dart';
 import 'secondScreen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const routeName = "/HomeScreen";
-  const HomeScreen({Key? key});
+
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final InfoController infoController = Get.put(InfoController());
+  final TextEditingController searchController = TextEditingController();
+  final FocusNode searchFocusNode = FocusNode();
+  bool showSearchField = false;
+  String searchQuery = '';
 
   IconData getIconForGrandArea(String grandArea) {
     switch (grandArea.toLowerCase()) {
@@ -24,61 +36,116 @@ class HomeScreen extends StatelessWidget {
       case 'comunidade':
         return Icons.monetization_on;
       default:
-        return Icons.question_mark; 
+        return Icons.question_mark;
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    final InfoController infoController = Get.put(InfoController());
+  void initState() {
+    super.initState();
+    searchFocusNode.addListener(() {
+      if (!searchFocusNode.hasFocus) {
+        setState(() {
+          showSearchField = false;
+        });
+      }
+    });
+  }
 
-    return Scaffold(
-      appBar: const HomeAppBar(),
-      body: Container(
-        color: softCream,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 16),
-              Center(
-                child: Text(
-                  'Em que podemos ajudar?',
-                  style: GoogleFonts.libreBaskerville(
-                    color: Colors.black, 
-                    fontSize: 20,
+  @override
+  void dispose() {
+    searchFocusNode.dispose();
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if (showSearchField) {
+          setState(() {
+            showSearchField = false;
+          });
+        }
+      },
+      child: Scaffold(
+        appBar: const HomeAppBar(),
+        body: Container(
+          color: softCream,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 16),
+                Center(
+                  child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        showSearchField = true;
+                        searchFocusNode.requestFocus();
+                      });
+                    },
+                    child: Text(
+                      'Em que podemos ajudar?',
+                      style: GoogleFonts.libreBaskerville(
+                        color: Colors.black,
+                        fontSize: 20,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 16),
-              Expanded(
-                child: Obx(() {
-                  if (infoController.refreshData.value) {
-                    return FutureBuilder<List<InfoModel>>(
-                      future: infoController.allInfo(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          return Center(child: Text('Erro ao carregar dados'));
-                        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                          return Center(child: Text('Nenhuma informação disponível'));
-                        } else {
-                          final informacoes = snapshot.data!;
-                          final uniqueGrandAreas = informacoes.map((info) => info.grandArea).toSet().toList();
-                          return Wrap(
-                            children: uniqueGrandAreas.map((grandArea) => buildGridItem(grandArea)).toList(),
-                          );
-                        }
+                if (showSearchField)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: TextField(
+                      controller: searchController,
+                      focusNode: searchFocusNode,
+                      decoration: InputDecoration(
+                        labelText: 'Pesquisar',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          searchQuery = value.toLowerCase();
+                        });
                       },
-                    );
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                }),
-              ),
-            ],
+                    ),
+                  ),
+                SizedBox(height: 16),
+                Expanded(
+                  child: Obx(() {
+                    if (infoController.refreshData.value) {
+                      return FutureBuilder<List<InfoModel>>(
+                        future: infoController.allInfo(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Center(child: Text('Erro ao carregar dados'));
+                          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                            return Center(child: Text('Nenhuma informação disponível'));
+                          } else {
+                            final informacoes = snapshot.data!;
+                            final uniqueGrandAreas = informacoes
+                                .map((info) => info.grandArea)
+                                .where((grandArea) => grandArea.toLowerCase().contains(searchQuery))
+                                .toSet()
+                                .toList();
+                            return Wrap(
+                              children: uniqueGrandAreas.map((grandArea) => buildGridItem(grandArea)).toList(),
+                            );
+                          }
+                        },
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  }),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -95,8 +162,8 @@ class HomeScreen extends StatelessWidget {
           Get.to(() => SecondScreen(grandArea: grandArea), transition: Transition.fadeIn);
         },
         child: Container(
-          width: 180, 
-          height: 150, 
+          width: 180,
+          height: 150,
           decoration: BoxDecoration(
             color: Color(0xFFFFC1CC),
             borderRadius: BorderRadius.circular(8),
@@ -113,7 +180,10 @@ class HomeScreen extends StatelessWidget {
               SizedBox(height: 8),
               Text(
                 grandArea,
-                style: TextStyle(color: Colors.black),
+                style: GoogleFonts.libreBaskerville(
+                  color: Colors.black,
+                  fontSize: 15,
+                ),
                 textAlign: TextAlign.center,
               ),
             ],

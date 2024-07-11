@@ -16,6 +16,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'screens/fourteenScreen.dart';
 import 'screens/infoPersonScreen.dart';
 
 void main() async {
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
         HomeScreen.routeName: (context) => const HomeScreen(),
         SecondScreen.routeName: (context) => const SecondScreen(),
         ThirdScreen.routeName: (context) => const ThirdScreen(infoList: []),
+        FourteenScreen.routeName: (context) => const FourteenScreen(),
         ProfileScreen.routeName: (context) => const ProfileScreen(),
         InfoPersonScreen.routeName: (context) => const InfoPersonScreen(),
       },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../const/colors.dart';
 import '../controllers/infoController.dart';
 import '../models/informacoesModel.dart';
@@ -17,8 +18,15 @@ class SecondScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(grandArea ?? 'Erro ao carregar dados'),
+        title: Text(
+          grandArea ?? 'Erro ao carregar dados',
+          style: GoogleFonts.bebasNeue(
+            fontSize: 40
+          ),
+        ),
+        backgroundColor: palePink,
       ),
+      backgroundColor: softCream,
       body: FutureBuilder<List<InfoModel>>(
         future: infoController.allInfo(),
         builder: (context, snapshot) {
@@ -57,7 +65,7 @@ class SecondScreen extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: softOrange, 
+            color: softPink, 
             borderRadius: BorderRadius.circular(8),
           ),
           padding: const EdgeInsets.all(16.0),
@@ -66,7 +74,10 @@ class SecondScreen extends StatelessWidget {
             children: [
               Text(
                 pequeArea,
-                style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold), 
+                style: GoogleFonts.libreBaskerville(
+                  color: Colors.black, 
+                  fontSize: 18,
+                ),
                 textAlign: TextAlign.center,
               ),
             ],

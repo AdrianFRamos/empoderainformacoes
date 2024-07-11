@@ -1,3 +1,4 @@
+import 'package:empoderainformacoes/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,6 +23,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8),
       child: AppBar(
+        backgroundColor: softPink,
         automaticallyImplyLeading: false,
         leading: showBackArrow
           ? IconButton(onPressed: () => Get.back(), icon: Icon(Icons.arrow_back))

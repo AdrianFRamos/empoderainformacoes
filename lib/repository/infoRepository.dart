@@ -18,7 +18,6 @@ class InfoRepository extends GetxController {
 
   Future<String> addInfo(InfoModel informacoes) async {
     try {
-      //final userId = AuthRepository.instance.firebaseUser!.uid;
       final currentInfo = await _db.collection('Informacoes').add(informacoes.toJson());
       return currentInfo.id;
     } catch (e) {
@@ -39,6 +38,36 @@ class InfoRepository extends GetxController {
       await _db.collection('Informacoes').doc(id).delete();
     } catch (e) {
       throw 'Ocorreu algo de errado ao deletar as informações. Tente novamente';
+    }
+  }
+
+  Future<List<InfoModel>> searchInfo(String query) async {
+    try {
+      final result = await _db.collection('Informacoes')
+          .where('grandArea', isEqualTo: query)
+          .get();
+          
+      final List<InfoModel> infoList = result.docs.map((documentSnapshot) => InfoModel.fromDocumentSnapshot(documentSnapshot)).toList();
+
+      if (infoList.isEmpty) {
+        final pequeAreaResult = await _db.collection('Informacoes')
+            .where('pequeArea', isEqualTo: query)
+            .get();
+
+        infoList.addAll(pequeAreaResult.docs.map((documentSnapshot) => InfoModel.fromDocumentSnapshot(documentSnapshot)).toList());
+
+        if (infoList.isEmpty) {
+          final tituloResult = await _db.collection('Informacoes')
+              .where('titulo', isEqualTo: query)
+              .get();
+
+          infoList.addAll(tituloResult.docs.map((documentSnapshot) => InfoModel.fromDocumentSnapshot(documentSnapshot)).toList());
+        }
+      }
+
+      return infoList;
+    } catch (e) {
+      throw 'Ocorreu algo de errado ao buscar as informações. Tente novamente';
     }
   }
 }

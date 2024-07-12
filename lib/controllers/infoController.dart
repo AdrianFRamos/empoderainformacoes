@@ -31,6 +31,16 @@ class InfoController extends GetxController {
     }
   }
 
+  Future<List<InfoModel>> searchInfo(String query) async {
+    try {
+      final informacoes = await infoRepository.searchInfo(query);
+      return informacoes;
+    } catch (e) {
+      snackBar.errorSnackBar(title: 'Um erro ocorreu. Tente novamente', message: e.toString());
+      return [];
+    }
+  }
+
   Future addNewInfo() async {
     try {
       if (!infoFormKey.currentState!.validate()) {
@@ -100,7 +110,7 @@ class InfoController extends GetxController {
       snackBar.errorSnackBar(title: 'Erro', message: 'Informação não atualizada.');
     }
   }
-  
+
   Future deleteInfo(String id) async {
     try {
       await infoRepository.deleteInfo(id);
@@ -112,7 +122,7 @@ class InfoController extends GetxController {
       snackBar.errorSnackBar(title: 'Erro', message: 'Informação não excluída.');
     }
   }
-  
+
   void resetFormField() {
     grandArea.clear();
     pequeArea.clear();

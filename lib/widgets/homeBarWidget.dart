@@ -13,6 +13,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: const Icon(Icons.notifications, color: AppColor.primary, size: 40,),
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
             backgroundImage: AssetImage('assets/icons/mulheraceno.png'),
@@ -29,6 +30,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: palePink,
       centerTitle: true,
       actions: <Widget>[
+        SizedBox(width: 40), 
         Container(
           child: IconButton(
             onPressed: (){
@@ -43,7 +45,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       ],
     );
   }
-  
+
   @override
   Size get preferredSize => const Size.fromHeight(55);
 }

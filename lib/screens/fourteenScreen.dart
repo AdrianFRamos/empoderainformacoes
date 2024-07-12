@@ -1,10 +1,8 @@
-import 'package:empoderainformacoes/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../const/colors.dart';
 import '../models/informacoesModel.dart';
-import '../widgets/infoDetailWidget.dart';
-import '../widgets/infoDetailWithIconWidget.dart';
 
 class FourteenScreen extends StatelessWidget {
   final InfoModel? info;
@@ -27,27 +25,101 @@ class FourteenScreen extends StatelessWidget {
       backgroundColor: softCream,
       body: Container(
         margin: EdgeInsets.all(10),
-        child: info != null ? ListView(
-          children: [
-            InfoDetailWidget(title: 'Titulo', content: info!.titulo),
-            InfoDetailWidget(title: 'Descrição', content: info!.descricao),
-            InfoDetailWithIconWidget(
-              title: 'Endereço',
-              content: info!.endereco,
-              icon: Icons.location_on,
-              onTap: () => _launchMaps(info!.endereco),
+        child: info != null
+            ? ListView(
+                children: [
+                  Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      info!.titulo,
+                      style: GoogleFonts.bebasNeue(
+                        fontSize: 25,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      '${info?.dateTime ?? ''}',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      info!.descricao,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  _buildInfoRow(
+                    context,
+                    Icons.location_on,
+                    'Endereço',
+                    info!.endereco,
+                    _launchMaps,
+                  ),
+                  _buildInfoRow(
+                    context,
+                    Icons.phone,
+                    'Telefone',
+                    info!.telefone,
+                    _launchPhoneCall,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Mais informações: ${info!.maisInfo}',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : Center(
+                child: Text('Nenhuma informação disponível.'),
+              ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(BuildContext context, IconData icon, String title, String content, Function(String) onTap) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.black),
+          SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              '$title: $content',
+              style: GoogleFonts.montserrat(
+                fontSize: 16,
+                color: Colors.blue,
+              ),
             ),
-            InfoDetailWithIconWidget(
-              title: 'Telefone',
-              content: info!.telefone,
-              icon: Icons.phone,
-              onTap: () => _launchPhoneCall(info!.telefone),
-            ),
-            InfoDetailWidget(title: 'Mais Informações', content: info!.maisInfo),
-          ],
-        ) : Center(
-          child: Text('Nenhuma informação disponível.'),
-        ),
+          ),
+          IconButton(
+            icon: Icon(Icons.arrow_forward, color: Colors.blue),
+            onPressed: () => onTap(content),
+          ),
+        ],
       ),
     );
   }

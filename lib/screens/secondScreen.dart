@@ -21,10 +21,20 @@ class SecondScreen extends StatelessWidget {
         title: Text(
           grandArea ?? 'Erro ao carregar dados',
           style: GoogleFonts.bebasNeue(
-            fontSize: 40
+            fontSize: 40,
+            color: Colors.black,
           ),
         ),
         backgroundColor: palePink,
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              
+            },
+            icon: Icon(Icons.search, color: Colors.black),
+          ),
+        ],
+        centerTitle: true,
       ),
       backgroundColor: softCream,
       body: FutureBuilder<List<InfoModel>>(
@@ -47,7 +57,8 @@ class SecondScreen extends StatelessWidget {
               itemCount: uniqueSmallAreas.length,
               itemBuilder: (context, index) {
                 final pequeArea = uniqueSmallAreas[index];
-                return buildGridItem(pequeArea: pequeArea, infoList: informacoes.where((info) => info.pequeArea == pequeArea).toList());
+                final infoList = informacoes.where((info) => info.pequeArea == pequeArea).toList();
+                return buildGridItem(pequeArea: pequeArea, infoList: infoList);
               },
             );
           }
@@ -58,14 +69,17 @@ class SecondScreen extends StatelessWidget {
 
   Widget buildGridItem({required String pequeArea, required List<InfoModel> infoList}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), 
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: GestureDetector(
         onTap: () {
-          Get.to(() => ThirdScreen(infoList: infoList), transition: Transition.fadeIn);
+          Get.to(
+            () => ThirdScreen(infoList: infoList, pequeArea: pequeArea),
+            transition: Transition.fadeIn,
+          );
         },
         child: Container(
           decoration: BoxDecoration(
-            color: softPink, 
+            color: palePink,
             borderRadius: BorderRadius.circular(8),
           ),
           padding: const EdgeInsets.all(16.0),
@@ -74,8 +88,8 @@ class SecondScreen extends StatelessWidget {
             children: [
               Text(
                 pequeArea,
-                style: GoogleFonts.libreBaskerville(
-                  color: Colors.black, 
+                style: GoogleFonts.montserrat(
+                  color: Colors.black,
                   fontSize: 18,
                 ),
                 textAlign: TextAlign.center,

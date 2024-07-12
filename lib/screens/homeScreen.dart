@@ -27,6 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
     switch (grandArea.toLowerCase()) {
       case 'aposentadoria':
         return Icons.account_balance;
+      case 'direitos inclusivos':
+        return Icons.all_inclusive;
+      case 'seguro social':
+        return Icons.lock;
+      case 'violência contra a mulher':
+        return Icons.shield;
+      case 'direitos trabalhistas':
+        return Icons.balance;
       case 'saude':
         return Icons.local_hospital;
       case 'educacao':
@@ -89,9 +97,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: Text(
                       'Em que podemos ajudar?',
-                      style: GoogleFonts.libreBaskerville(
+                      style: GoogleFonts.montserrat(
                         color: Colors.black,
                         fontSize: 20,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                   ),
@@ -105,6 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: InputDecoration(
                         labelText: 'Pesquisar',
                         border: OutlineInputBorder(),
+                        suffixIcon: Icon(Icons.search)
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -118,7 +128,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Obx(() {
                     if (infoController.refreshData.value) {
                       return FutureBuilder<List<InfoModel>>(
-                        future: infoController.allInfo(),
+                        future: searchQuery.isEmpty
+                            ? infoController.allInfo()
+                            : infoController.searchInfo(searchQuery),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.waiting) {
                             return Center(child: CircularProgressIndicator());
@@ -165,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
           width: 180,
           height: 150,
           decoration: BoxDecoration(
-            color: Color(0xFFFFC1CC),
+            color: palePink,
             borderRadius: BorderRadius.circular(8),
           ),
           padding: const EdgeInsets.all(16.0),
@@ -175,12 +187,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Icon(
                 icon,
                 size: 48,
-                color: Color(0xFFFFF2E2),
+                color: softCream,
               ),
               SizedBox(height: 8),
               Text(
                 grandArea,
-                style: GoogleFonts.libreBaskerville(
+                style: GoogleFonts.montserrat(
                   color: Colors.black,
                   fontSize: 15,
                 ),

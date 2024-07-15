@@ -174,8 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Get.to(() => SecondScreen(grandArea: grandArea), transition: Transition.fadeIn);
         },
         child: Container(
-          width: 180,
-          height: 150,
+          width: 170,
+          height: 160,
           decoration: BoxDecoration(
             color: palePink,
             borderRadius: BorderRadius.circular(8),

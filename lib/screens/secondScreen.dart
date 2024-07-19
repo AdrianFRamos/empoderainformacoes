@@ -11,6 +11,7 @@ class SecondScreen extends StatelessWidget {
   final String? grandArea;
 
   const SecondScreen({Key? key, this.grandArea}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {

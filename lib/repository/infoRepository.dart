@@ -63,6 +63,8 @@ class InfoRepository extends GetxController {
 
           infoList.addAll(tituloResult.docs.map((documentSnapshot) => InfoModel.fromDocumentSnapshot(documentSnapshot)).toList());
         }
+
+        
       }
 
       return infoList;
@@ -70,4 +72,6 @@ class InfoRepository extends GetxController {
       throw 'Ocorreu algo de errado ao buscar as informações. Tente novamente';
     }
   }
+
+
 }

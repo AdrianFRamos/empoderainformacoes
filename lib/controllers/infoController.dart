@@ -56,6 +56,7 @@ class InfoController extends GetxController {
         endereco: endereco.text.trim(),
         telefone: telefone.text.trim(),
         maisInfo: maisInfo.text.trim(),
+        dateTime: DateTime.now(), // Adiciona a data/hora atual
       );
       final id = await infoRepository.addInfo(informacoes);
       informacoes.id = id;
@@ -96,6 +97,7 @@ class InfoController extends GetxController {
         endereco: endereco.text.trim(),
         telefone: telefone.text.trim(),
         maisInfo: maisInfo.text.trim(),
+        dateTime: DateTime.now(), // Adiciona a data/hora atual
       );
 
       await infoRepository.updateInfo(informacoes);

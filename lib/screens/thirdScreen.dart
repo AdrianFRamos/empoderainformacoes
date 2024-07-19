@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:empoderainformacoes/const/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:empoderainformacoes/screens/fourteenScreen.dart';
 import '../models/informacoesModel.dart';
@@ -67,6 +69,8 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Dados recebidos na FourteenScreen: ${info.dateTime}');
+
     return Container(
       color: softCream,
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -106,12 +110,12 @@ class InfoCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Data: ${info.dateTime != null ? formatDate(info.dateTime!) : ''}',
+                'Data: ${info.dateTime}',
                 style: GoogleFonts.montserrat(
                   color: Colors.grey[600],
                   fontSize: 14,
                 ),
-              ),
+              )
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -148,6 +152,21 @@ class InfoCard extends StatelessWidget {
   }
 
   String formatDate(DateTime date) {
-    return '${date.day}/${date.month}/${date.year}';
+    final DateFormat formatter = DateFormat('dd/MM/yyyy HH:mm:ss');
+    return formatter.format(date);
+  }
+  
+  void retrieveDateTime() async {
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+        .collection('informacoes')
+        .doc(info.id)
+        .get();
+
+    DateTime timestamp = (documentSnapshot['timestamp'].toDate());
+
+    print(timestamp); 
+
+    String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(timestamp);
+    print(formattedDate); 
   }
 }

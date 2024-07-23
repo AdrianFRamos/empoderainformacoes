@@ -43,11 +43,13 @@ class InfoRepository extends GetxController {
 
   Future<List<InfoModel>> searchInfo(String query) async {
     try {
-      final result = await _db.collection('Informacoes')
+      List<InfoModel> infoList = [];
+
+      final grandAreaResult = await _db.collection('Informacoes')
           .where('grandArea', isEqualTo: query)
           .get();
-          
-      final List<InfoModel> infoList = result.docs.map((documentSnapshot) => InfoModel.fromDocumentSnapshot(documentSnapshot)).toList();
+
+      infoList.addAll(grandAreaResult.docs.map((documentSnapshot) => InfoModel.fromDocumentSnapshot(documentSnapshot)).toList());
 
       if (infoList.isEmpty) {
         final pequeAreaResult = await _db.collection('Informacoes')
@@ -55,16 +57,14 @@ class InfoRepository extends GetxController {
             .get();
 
         infoList.addAll(pequeAreaResult.docs.map((documentSnapshot) => InfoModel.fromDocumentSnapshot(documentSnapshot)).toList());
+      }
 
-        if (infoList.isEmpty) {
-          final tituloResult = await _db.collection('Informacoes')
-              .where('titulo', isEqualTo: query)
-              .get();
+      if (infoList.isEmpty) {
+        final tituloResult = await _db.collection('Informacoes')
+            .where('titulo', isEqualTo: query)
+            .get();
 
-          infoList.addAll(tituloResult.docs.map((documentSnapshot) => InfoModel.fromDocumentSnapshot(documentSnapshot)).toList());
-        }
-
-        
+        infoList.addAll(tituloResult.docs.map((documentSnapshot) => InfoModel.fromDocumentSnapshot(documentSnapshot)).toList());
       }
 
       return infoList;
@@ -72,6 +72,4 @@ class InfoRepository extends GetxController {
       throw 'Ocorreu algo de errado ao buscar as informações. Tente novamente';
     }
   }
-
-
 }

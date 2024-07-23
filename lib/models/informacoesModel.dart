@@ -35,7 +35,7 @@ class InfoModel {
       'endereco': endereco,
       'telefone': telefone,
       'maisInfo': maisInfo,
-      'DateTime': dateTime != null ? Timestamp.fromDate(dateTime!) : null,
+      'Datetime': dateTime != null ? Timestamp.fromDate(dateTime!) : null,
     };
   }
 
@@ -50,7 +50,7 @@ class InfoModel {
       endereco: data['endereco'] as String,
       telefone: data['telefone'] as String,
       maisInfo: data['maisInfo'] as String,
-      dateTime: data['DateTime'] != null ? (data['DateTime'] as Timestamp).toDate() : null,
+      dateTime: data['Datetime'] != null ? (data['DateTime'] as Timestamp).toDate() : null,
     );
   }
 
@@ -65,7 +65,7 @@ class InfoModel {
       endereco: data['endereco'] ?? '',
       telefone: data['telefone']?.toString() ?? '',
       maisInfo: data['maisInfo'] ?? '',
-      dateTime: data['DateTime'] != null ? (data['DateTime'] as Timestamp).toDate() : null,
+      dateTime: data['Datetime'] != null ? (data['Datetime'] as Timestamp).toDate() : null,
     );
   }
 }

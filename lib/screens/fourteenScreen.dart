@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../const/colors.dart';
 import '../models/informacoesModel.dart';
+import '../utils/daysAgo.dart';
 
 class FourteenScreen extends StatelessWidget {
   final InfoModel? info;
@@ -48,7 +49,7 @@ class FourteenScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
-                      '${info?.dateTime ?? ''}',
+                      daysAgo(info?.dateTime),
                       style: GoogleFonts.montserrat(
                         fontSize: 14,
                         color: Colors.grey,

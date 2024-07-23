@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../const/colors.dart';
 import '../controllers/infoController.dart';
 import '../models/informacoesModel.dart';
+import '../widgets/grandAreaWidget.dart';
 import '../widgets/homeBarWidget.dart';
-import 'secondScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "/HomeScreen";
@@ -22,31 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final FocusNode searchFocusNode = FocusNode();
   bool showSearchField = false;
   String searchQuery = '';
-
-  IconData getIconForGrandArea(String grandArea) {
-    switch (grandArea.toLowerCase()) {
-      case 'aposentadoria':
-        return Icons.account_balance;
-      case 'direitos inclusivos':
-        return Icons.all_inclusive;
-      case 'seguro social':
-        return Icons.lock;
-      case 'violência contra a mulher':
-        return Icons.shield;
-      case 'direitos trabalhistas':
-        return Icons.balance;
-      case 'saude':
-        return Icons.local_hospital;
-      case 'educacao':
-        return Icons.school;
-      case 'profissional':
-        return Icons.work;
-      case 'comunidade':
-        return Icons.monetization_on;
-      default:
-        return Icons.question_mark;
-    }
-  }
 
   @override
   void initState() {
@@ -158,47 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildGridItem(String grandArea) {
-    final IconData icon = getIconForGrandArea(grandArea);
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      child: GestureDetector(
-        onTap: () {
-          Get.to(() => SecondScreen(grandArea: grandArea), transition: Transition.fadeIn);
-        },
-        child: Container(
-          width: 170,
-          height: 160,
-          decoration: BoxDecoration(
-            color: palePink,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 48,
-                color: softCream,
-              ),
-              SizedBox(height: 8),
-              Text(
-                grandArea,
-                style: GoogleFonts.montserrat(
-                  color: Colors.black,
-                  fontSize: 15,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
           ),
         ),
       ),

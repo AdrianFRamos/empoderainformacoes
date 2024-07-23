@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:empoderainformacoes/const/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:empoderainformacoes/screens/fourteenScreen.dart';
 import '../models/informacoesModel.dart';
+import '../widgets/infoCardWidget.dart';
 
 class ThirdScreen extends StatelessWidget {
   static const routeName = "/ThirdScreen";
@@ -51,7 +49,7 @@ class ThirdScreen extends StatelessWidget {
               itemCount: infoList.length,
               itemBuilder: (context, index) {
                 final info = infoList[index];
-                return InfoCard(info: info);
+                return InfoCardWidget(info: info);
               },
             ),
           ),
@@ -61,112 +59,3 @@ class ThirdScreen extends StatelessWidget {
   }
 }
 
-class InfoCard extends StatelessWidget {
-  final InfoModel info;
-  static const int descriptionLimit = 100;
-
-  const InfoCard({Key? key, required this.info}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    print('Dados recebidos na FourteenScreen: ${info.dateTime}');
-
-    return Container(
-      color: softCream,
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      child: Card(
-        color: palePink,
-        elevation: 5,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                info.titulo,
-                style: GoogleFonts.montserrat(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                limitText(info.descricao, descriptionLimit),
-                style: GoogleFonts.montserrat(
-                  color: Colors.black,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Data: ${info.dateTime}',
-                style: GoogleFonts.montserrat(
-                  color: Colors.grey[600],
-                  fontSize: 14,
-                ),
-              )
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FourteenScreen(info: info),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Leia mais',
-                    style: GoogleFonts.montserrat(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  String limitText(String text, int limit) {
-    return text.length > limit ? '${text.substring(0, limit)}...' : text;
-  }
-
-  String formatDate(DateTime date) {
-    final DateFormat formatter = DateFormat('dd/MM/yyyy HH:mm:ss');
-    return formatter.format(date);
-  }
-  
-  void retrieveDateTime() async {
-    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-        .collection('informacoes')
-        .doc(info.id)
-        .get();
-
-    DateTime timestamp = (documentSnapshot['timestamp'].toDate());
-
-    print(timestamp); 
-
-    String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(timestamp);
-    print(formattedDate); 
-  }
-}

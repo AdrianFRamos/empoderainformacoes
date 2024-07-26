@@ -20,6 +20,8 @@ IconData getIconForGrandArea(String grandArea) {
         return Icons.work;
       case 'comunidade':
         return Icons.monetization_on;
+      case 'Mercado de Trabalho':
+        return Icons.work_outline;
       default:
         return Icons.question_mark;
     }

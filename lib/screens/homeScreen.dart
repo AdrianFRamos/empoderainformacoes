@@ -1,3 +1,4 @@
+import 'package:empoderainformacoes/screens/secondScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -44,17 +45,86 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (showSearchField) {
-          setState(() {
-            showSearchField = false;
-          });
-        }
-      },
-      child: Scaffold(
-        appBar: const HomeAppBar(),
-        body: Container(
+    final InfoController infoController = InfoController.instance;
+
+    return Scaffold(
+      appBar: HomeAppBar(),
+      drawer: Drawer(
+        child: FutureBuilder<List<String>>(
+          future: infoController.getNewGrandAreas(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Erro ao carregar notificações'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: palePink,
+                    ),
+                    child: Text(
+                      'Notificações',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Nenhuma nova grandArea'),
+                  ),
+                ],
+              );
+            } else {
+              final newGrandAreas = snapshot.data!;
+              return ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: palePink,
+                    ),
+                    child: Text(
+                      'Notificações',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  ...newGrandAreas.map((grandArea) {
+                    return ListTile(
+                      title: Text('Nova grandArea: $grandArea'),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SecondScreen(grandArea: grandArea),
+                          ),
+                        );
+                        infoController.markNotificationsAsRead();
+                        Navigator.pop(context); 
+                      },
+                    );
+                  }).toList(),
+                ],
+              );
+            }
+          },
+        ),
+      ),
+      body: GestureDetector(
+        onTap: () {
+          if (showSearchField) {
+            setState(() {
+              showSearchField = false;
+            });
+          }
+        },
+        child: Container(
           color: softCream,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -75,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: GoogleFonts.montserrat(
                         color: Colors.black,
                         fontSize: 20,
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -89,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: InputDecoration(
                         labelText: 'Pesquisar',
                         border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.search)
+                        suffixIcon: Icon(Icons.search),
                       ),
                       onChanged: (value) {
                         setState(() {

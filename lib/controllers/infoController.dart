@@ -21,6 +21,9 @@ class InfoController extends GetxController {
   final Rx<InfoModel> selecionarInfo = InfoModel.empty().obs;
   final infoRepository = Get.put(InfoRepository());
 
+  DateTime lastNotificationTimestamp = DateTime.now().subtract(Duration(days: 1));
+  RxList<String> newGrandAreas = <String>[].obs;
+
   Future<List<InfoModel>> allInfo() async {
     try {
       final informacoes = await infoRepository.fetchInfo();
@@ -60,6 +63,8 @@ class InfoController extends GetxController {
       );
       final id = await infoRepository.addInfo(informacoes);
       informacoes.id = id;
+
+      newGrandAreas.add(informacoes.grandArea);
 
       snackBar.sucessSnackBar(title: 'Parabéns', message: 'Informação adicionada com sucesso.');
 
@@ -136,4 +141,24 @@ class InfoController extends GetxController {
     infoFormKey.currentState?.reset();
     _cleanController.clear();
   }
+
+  Future<List<String>> getNewGrandAreas() async {
+    try {
+      final informacoes = await allInfo();
+      final newGrandAreas = informacoes
+          .where((info) => info.dateTime!.isAfter(lastNotificationTimestamp))
+          .map((info) => info.grandArea)
+          .toSet()
+          .toList();
+      return newGrandAreas;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  void markNotificationsAsRead() {
+    lastNotificationTimestamp = DateTime.now();
+  }
 }
+
+

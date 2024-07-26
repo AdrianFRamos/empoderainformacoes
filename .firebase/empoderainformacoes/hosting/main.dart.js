@@ -29367,7 +29367,7 @@ case"saude":return B.H_
 case"educacao":return B.Hb
 case"profissional":return B.Hg
 case"comunidade":return B.H6
-case"Mercado de Trabalho":return B.Hh
+case"mercado de trabalho":return B.Hh
 default:return B.Hw}},
 aKo(a){var s
 if(a==null)return"Data n\xe3o dispon\xedvel"

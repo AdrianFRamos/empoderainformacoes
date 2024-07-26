@@ -1,17 +1,60 @@
-import 'package:empoderainformacoes/const/colors.dart';
-import 'package:empoderainformacoes/screens/profileScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../const/colors.dart';
+import '../screens/profileScreen.dart';
+import '../controllers/infoController.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const HomeAppBar({
-    super.key,
-  });
+  const HomeAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final InfoController infoController = InfoController.instance;
+
     return AppBar(
-      leading: const Icon(Icons.notifications, color: AppColor.primary, size: 40,),
+      leading: Stack(
+        children: [
+          IconButton(
+            icon: Icon(Icons.notifications, color: AppColor.primary, size: 40),
+            onPressed: () {
+              Scaffold.of(context).openDrawer(); 
+            },
+          ),
+          Obx(() {
+            print(infoController.newGrandAreas);
+            if (infoController.newGrandAreas.isNotEmpty) {
+              return Positioned(
+                right: 0,
+                top: 0,
+                child: Container(
+                  padding: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  constraints: BoxConstraints(
+                    minWidth: 16,
+                    minHeight: 16,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${infoController.newGrandAreas.length}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              return SizedBox.shrink();
+            }
+          }),
+        ],
+      ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -21,25 +64,21 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           SizedBox(width: 8),
           Text(
             'E-MPODERA',
-            style: GoogleFonts.bebasNeue(
-              fontSize: 40
-            ),
+            style: GoogleFonts.bebasNeue(fontSize: 40),
           ),
         ],
       ),
       backgroundColor: palePink,
       centerTitle: true,
       actions: <Widget>[
-        SizedBox(width: 40), 
-        Container(
-          child: IconButton(
-            onPressed: (){
-              Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
-            }, 
-            icon: Icon(
-              Icons.menu,
-              size: 40,
-            ),
+        SizedBox(width: 40),
+        IconButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
+          },
+          icon: Icon(
+            Icons.menu,
+            size: 40,
           ),
         ),
       ],

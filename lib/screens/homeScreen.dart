@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   ListTile(
-                    title: Text('Nenhuma nova grandArea'),
+                    title: Text('Nenhuma nova informação adicionada'),
                   ),
                 ],
               );
@@ -97,7 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ...newGrandAreas.map((grandArea) {
                     return ListTile(
-                      title: Text('Nova grandArea: $grandArea'),
+                      
+                      title: Text('Nova Informação Adicionada: $grandArea'),
                       onTap: () {
                         Navigator.push(
                           context,

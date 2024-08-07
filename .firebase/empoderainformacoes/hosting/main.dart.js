@@ -51051,7 +51051,7 @@ else if(b.c!=null)return A.dc(A.aH("Erro ao carregar notifica\xe7\xf5es",p,p,p,p
 else{s=b.b
 r=s==null||J.fE(s)
 q=t.p
-if(r)return A.aAL(A.b([A.aFd(A.aH(o,p,p,p,p,A.it().$2$fontSize$fontWeight(24,B.ad),p,p),new A.c5(B.c2,p,p,p,p,p,B.a_)),A.adP(p,p,p,p,A.aH("Nenhuma nova grandArea",p,p,p,p,p,p,p),p)],q),B.an)
+if(r)return A.aAL(A.b([A.aFd(A.aH(o,p,p,p,p,A.it().$2$fontSize$fontWeight(24,B.ad),p,p),new A.c5(B.c2,p,p,p,p,p,B.a_)),A.adP(p,p,p,p,A.aH("Nenhuma nova informa\xe7\xe3o adicionada",p,p,p,p,p,p,p),p)],q),B.an)
 else{s.toString
 r=A.b([A.aFd(A.aH(o,p,p,p,p,A.it().$2$fontSize$fontWeight(24,B.ad),p,p),new A.c5(B.c2,p,p,p,p,p,B.a_))],q)
 s=J.iw(s,new A.asc(a,this.a),t.hT)
@@ -51060,7 +51060,7 @@ return A.aAL(r,B.an)}}},
 $S:399}
 A.asc.prototype={
 $1(a){var s=null
-return A.adP(s,s,new A.as8(this.a,a,this.b),s,A.aH("Nova grandArea: "+a,s,s,s,s,s,s,s),s)},
+return A.adP(s,s,new A.as8(this.a,a,this.b),s,A.aH("Nova Informa\xe7\xe3o Adicionada: "+a,s,s,s,s,s,s,s),s)},
 $S:400}
 A.as8.prototype={
 $0(){var s=this.a,r=A.aep(new A.as7(this.b),null,t.z)

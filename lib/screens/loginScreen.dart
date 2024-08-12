@@ -1,10 +1,11 @@
 import 'package:empoderainformacoes/const/colors.dart';
 import 'package:empoderainformacoes/controllers/loginController.dart';
 import 'package:empoderainformacoes/screens/forgetPassword.dart';
-import 'package:empoderainformacoes/screens/signUpScreen.dart';
+//import 'package:empoderainformacoes/screens/signUpScreen.dart';
 import 'package:empoderainformacoes/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 import '../widgets/forgetPasswordWidget.dart';
@@ -20,7 +21,7 @@ class LoginScreen extends StatelessWidget {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Container(
-            color:const Color.fromARGB(255, 245, 200, 229),
+            color: softCream,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,15 +29,16 @@ class LoginScreen extends StatelessWidget {
                 Image.asset(Helper.getAssetName("mulheraceno.png", "icons"),
                 height: 200,
                 ),
-                const Text(
+                Text(
                   "Faça Seu Login",
-                  style: TextStyle(
-                    color: AppColor.primary,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold
+                  style: GoogleFonts.montserrat(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Form(
+                  key: controller.loginFormKey,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 3),
                     child: Column(
@@ -44,6 +46,14 @@ class LoginScreen extends StatelessWidget {
                       children: <Widget>[
                         TextFormField(
                           controller: controller.email,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Digite seu e-mail';
+                            } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                              return 'Digite um e-mail válido';
+                            }
+                            return null;
+                          },
                           decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.person_outline_outlined),
                             labelText: "E-mail",
@@ -54,23 +64,27 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        TextFormField(
-                          controller: controller.password,
-                          validator: (value) {
-                            if (value!.isEmpty) return 'Digite sua senha';
-                            return null;
-                          },
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Icons.key),
-                            labelText: "Senha",
-                            hintText: "Senha",
-                            border: OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                              onPressed: null, 
-                              icon: Icon(Icons.remove_red_eye_sharp)
-                            )
-                          ),
+                        Obx(() => 
+                          TextFormField(
+                            controller: controller.password,
+                            obscureText: !controller.showPassword.value,
+                            validator: (value) {
+                              if (value!.isEmpty) return 'Digite sua senha';
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.key),
+                              labelText: "Senha",
+                              hintText: "Senha",
+                              border: const OutlineInputBorder(),
+                              suffixIcon: IconButton(
+                                onPressed: () => controller.showPassword.value = !controller.showPassword.value,
+                                icon: Icon(controller.showPassword.value ? Icons.visibility : Icons.visibility_off),
+                              ),
+                            ),
+                          )
                         ),
+
                         const SizedBox(
                           height: 20,
                         ),
@@ -137,12 +151,15 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll( softPink)
+                            ),
                             onPressed: () => controller.login(),
-                            child:  const Text(
+                            child: Text(
                               "LOGIN",
-                              style: TextStyle(
-                                color: AppColor.secondary,
-                                fontSize: 15
+                              style: GoogleFonts.montserrat(
+                                color: Colors.black,
+                                fontSize: 15,
                               ),
                             ),
                           ),
@@ -173,25 +190,25 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        Align(
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushReplacementNamed(SignUpScreen.routeName);
-                            },
-                            child: Text.rich(
-                              TextSpan(
-                                text: "Voce ainda não tem uma conta ? ",
-                                children: [
-                                  TextSpan(
-                                    text: "Cadastre-se",
-                                    style: Helper.getTheme(context).labelLarge,
-                                  )
-                                ],
-                                style: Helper.getTheme(context).labelLarge,
-                              )
-                            ),
-                          ),
-                        )
+                        //Align(
+                        //  child: TextButton(
+                        //    onPressed: () {
+                        //      Navigator.of(context).pushReplacementNamed(SignUpScreen.routeName);
+                        //    },
+                        //  child: Text.rich(
+                        //    TextSpan(
+                        //      text: "Voce ainda não tem uma conta ? ",
+                        //      children: [
+                        //        TextSpan(
+                        //          text: "Cadastre-se",
+                        //          style: Helper.getTheme(context).labelLarge,
+                        //        )
+                        //      ],
+                        //      style: Helper.getTheme(context).labelLarge,
+                        //    )
+                        //  ),
+                        //  ),
+                        //)
                       ],
                     ),
                   )

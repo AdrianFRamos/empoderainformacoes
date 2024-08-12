@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../const/colors.dart';
-import '../screens/profileScreen.dart';
+import '../screens/loginScreen.dart';
 import '../controllers/infoController.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -74,7 +74,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         SizedBox(width: 40),
         IconButton(
           onPressed: () {
-            Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
           },
           icon: Icon(
             Icons.menu,

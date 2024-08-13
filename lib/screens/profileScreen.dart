@@ -1,3 +1,4 @@
+import 'package:empoderainformacoes/const/colors.dart';
 import 'package:empoderainformacoes/screens/allInfoScreen.dart';
 import 'package:empoderainformacoes/screens/homeScreen.dart';
 import 'package:empoderainformacoes/screens/infoPersonScreen.dart';
@@ -19,6 +20,7 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: softPink,
         leading: IconButton(
           onPressed: (){
             Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
@@ -32,123 +34,127 @@ class ProfileScreen extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             onPressed: (){
-
             }, 
             icon: Icon(isDark? Icons.sunny : Icons.mode_night_outlined)
           )
         ],
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding:  const EdgeInsets.all(8),
-          child: Column(
-            children: <Widget>[
-              Stack(
-                children: [
-                  SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image(image: AssetImage(Helper.getAssetName('educacao.png', 'images'))),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 35,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100), 
-                        color: Colors.pink[50],
-                      ),
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.black,
-                        size: 20,
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Container(
+            color: softCream,
+            padding:  const EdgeInsets.all(8),
+            child: Column(
+              children: <Widget>[
+                Stack(
+                  children: [
+                    SizedBox(
+                      width: 120,
+                      height: 120,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image(image: AssetImage(Helper.getAssetName('educacao.png', 'images'))),
                       ),
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Coding with T",
-                style: Theme.of(context).textTheme.headlineMedium
-              ),
-              Text(
-                "superAdmin@codingwith.com",
-                style: Theme.of(context).textTheme.bodyMedium
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                  onPressed: () => Get.to(() => UpdateProfileScreen()), 
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.pink[50],
-                    side: BorderSide.none,
-                    shape: StadiumBorder(),
-                  ),
-                  child: Text(
-                    "Edit Profile",
-                    style: TextStyle(
-                      color: Colors.white
-                    ),
-                  )
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        width: 35,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100), 
+                          color: softPink,
+                        ),
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.black,
+                          size: 20,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Divider(),
-              SizedBox(
-                height: 10,
-              ),
-              ProfileMenuWidget(
-                title: "Configuração",
-                icon: Icons.settings,
-                onPress: () {},
-              ),
-              ProfileMenuWidget(
-                title: "Detalhes",
-                icon: Icons.pageview_outlined,
-                onPress: () {},
-              ),
-              ProfileMenuWidget(
-                title: "Privacidade do usuario",
-                icon: Icons.privacy_tip,
-                onPress: () {},
-              ),
-              Divider(),
-              SizedBox(
-                height: 10,
-              ),
-              ProfileMenuWidget(
-                title: "Cadastrar Informações",
-                icon: Icons.info_outline,
-                onPress: () => Get.to(() => AllInfoScreen()), 
-              ),
-              ProfileMenuWidget(
-                title: "Informações",
-                icon: Icons.info_outline,
-                onPress: () => Get.to(() => InfoPersonScreen()), 
-              ),
-              ProfileMenuWidget(
-                title: "Sair",
-                icon: Icons.output,
-                textColor: Colors.red,
-                endIcon: false,
-                onPress: (){
-                  AuthRepository.instance.logout();
-                },
-              ),
-            ],
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Laphis - Empodera",
+                  style: Theme.of(context).textTheme.headlineMedium
+                ),
+                Text(
+                  "laphis@laphis.com",
+                  style: Theme.of(context).textTheme.bodyMedium
+          
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: () => Get.to(() => UpdateProfileScreen()), 
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: softPink,
+                      side: BorderSide.none,
+                      shape: StadiumBorder(),
+                    ),
+                    child: Text(
+                      "Edit Profile",
+                      style: TextStyle(
+                        color: Colors.white
+                      ),
+                    )
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Divider(),
+                SizedBox(
+                  height: 10,
+                ),
+                ProfileMenuWidget(
+                  title: "Configuração",
+                  icon: Icons.settings,
+                  onPress: () {},
+                ),
+                ProfileMenuWidget(
+                  title: "Detalhes",
+                  icon: Icons.pageview_outlined,
+                  onPress: () {},
+                ),
+                ProfileMenuWidget(
+                  title: "Privacidade do usuario",
+                  icon: Icons.privacy_tip,
+                  onPress: () {},
+                ),
+                Divider(),
+                SizedBox(
+                  height: 10,
+                ),
+                ProfileMenuWidget(
+                  title: "Cadastrar Informações",
+                  icon: Icons.info_outline,
+                  onPress: () => Get.to(() => AllInfoScreen()), 
+                ),
+                ProfileMenuWidget(
+                  title: "Informações",
+                  icon: Icons.info_outline,
+                  onPress: () => Get.to(() => InfoPersonScreen()), 
+                ),
+                ProfileMenuWidget(
+                  title: "Sair",
+                  icon: Icons.output,
+                  textColor: Colors.red,
+                  endIcon: false,
+                  onPress: (){
+                    AuthRepository.instance.logout();
+                  },
+                ),
+              ],
+            ),
           ),
         )
       ),

@@ -105,15 +105,28 @@ class AuthRepository extends GetxController {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       return null;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
-        return 'Email ou senha incorretos.';
+      if (e.code == 'user-not-found') {
+        print('Usuário não encontrado para o email: $email');
+        return 'Email não cadastrado.';
+      } else if (e.code == 'wrong-password') {
+        print('Senha incorreta para o email: $email');
+        return 'Senha incorreta.';
+      } else if (e.code == 'invalid-email') {
+        print('Email inválido: $email');
+        return 'Formato de email inválido.';
+      } else if (e.code == 'network-request-failed') {
+        print('Falha de rede ao tentar logar: $email');
+        return 'Falha na conexão. Verifique sua internet.';
       } else {
+        print('Erro não tratado: ${e.message}');
         return 'Ocorreu um erro durante o login. Por favor, tente novamente mais tarde.';
       }
-    } catch (_) {
+    } catch (e) {
+      print('Erro inesperado: $e');
       return 'Ocorreu um erro inesperado durante o login.';
     }
   }
+
 
   Future<void> sendEmailVerification() async {
     try {
@@ -150,14 +163,17 @@ class AuthRepository extends GetxController {
   //-----------------------LOGOUT-------------------------//
 
   Future<void> logout() async {
-    try {
-      await GoogleSignIn().signOut();
-      await _auth.signOut();
-      Get.offAll(() => const LoginScreen());
-    } on FirebaseAuthException catch (e) {
-      throw e.message!;
-    } catch (e) {
-      throw 'Logout não concluído. Tente novamente';
-    }
+  try {
+    await _auth.signOut();
+    //await GoogleSignIn().signOut();
+    Get.offAll(() => const HomeScreen());
+  } on FirebaseAuthException catch (e) {
+    print('Erro ao deslogar do Firebase: ${e.message}');
+    throw 'Erro ao deslogar. Tente novamente.';
+  } catch (e) {
+    print('Erro inesperado ao deslogar: $e');
+    throw 'Logout não concluído. Tente novamente';
   }
+}
+
 }

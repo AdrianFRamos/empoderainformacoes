@@ -41,6 +41,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/key.properties
+/android/app/src/my-key.jks
 
 # Ignore Gradle project-specific cache directory
 .gradle

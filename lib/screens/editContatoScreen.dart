@@ -1,30 +1,37 @@
+import 'package:empoderainformacoes/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:empoderainformacoes/controllers/infoController.dart';
-import 'package:empoderainformacoes/models/informacoesModel.dart';
+import 'package:empoderainformacoes/controllers/contatoController.dart';
+import 'package:empoderainformacoes/models/contatoModel.dart';
 
-class EditInfoScreen extends StatelessWidget {
-  final InfoModel info;
+class EditContatoScreen extends StatelessWidget {
+  final ContatoModel contato;
 
-  EditInfoScreen({required this.info}) {
-    final InfoController infoController = Get.find();
-    infoController.loadInfo(info);
+  EditContatoScreen({required this.contato}) {
+    final ContatoController contatoController = Get.find();
+    contatoController.loadContato(contato);
   }
 
-  final InfoController infoController = Get.find();
+  final ContatoController contatoController = Get.find();
 
   void _submitForm() {
-    infoController.updateInfo(info.id);
+    contatoController.updateContato(contato.id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Editar Informação')),
+      backgroundColor: softCream,
+      appBar: AppBar(
+        title: Text('Editar Contato'),
+        backgroundColor: palePink,
+        iconTheme: IconThemeData(color: Colors.black),
+        titleTextStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
         child: Form(
-          key: infoController.infoFormKey,
+          key: contatoController.contatoFormKey,
           child: Card(
             elevation: 4,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -32,19 +39,11 @@ class EditInfoScreen extends StatelessWidget {
               padding: EdgeInsets.all(20),
               child: Column(
                 children: [
-                  buildInputField(infoController.grandArea, 'Grande Área', Icons.text_snippet),
+                  buildInputField(contatoController.nome, 'Nome', Icons.person),
                   SizedBox(height: 15),
-                  buildInputField(infoController.pequeArea, 'Pequena Área', Icons.text_snippet),
+                  buildInputField(contatoController.telefone, 'Telefone', Icons.phone),
                   SizedBox(height: 15),
-                  buildInputField(infoController.titulo, 'Título', Icons.title),
-                  SizedBox(height: 15),
-                  buildInputField(infoController.descricao, 'Descrição', Icons.book, maxLines: 3),
-                  SizedBox(height: 15),
-                  buildInputField(infoController.endereco, 'Endereço', Icons.map),
-                  SizedBox(height: 15),
-                  buildInputField(infoController.telefone, 'Telefone', Icons.phone),
-                  SizedBox(height: 15),
-                  buildInputField(infoController.maisInfo, 'Mais Informações', Icons.add),
+                  buildInputField(contatoController.email, 'Email', Icons.email),
                 ],
               ),
             ),
@@ -58,6 +57,7 @@ class EditInfoScreen extends StatelessWidget {
           icon: Icon(Icons.save),
           label: Text('Salvar Alterações'),
           style: ElevatedButton.styleFrom(
+            backgroundColor: softOrange,
             minimumSize: Size(double.infinity, 50),
             textStyle: TextStyle(fontSize: 18),
           ),
@@ -66,10 +66,9 @@ class EditInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget buildInputField(TextEditingController controller, String label, IconData icon, {int maxLines = 1}) {
+  Widget buildInputField(TextEditingController controller, String label, IconData icon) {
     return TextFormField(
       controller: controller,
-      maxLines: maxLines,
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(icon),

@@ -1,53 +1,25 @@
-import 'dart:io';
 import 'package:empoderainformacoes/const/colors.dart';
-import 'package:empoderainformacoes/controllers/infoController.dart';
+import 'package:empoderainformacoes/controllers/servicoController.dart';
 import 'package:empoderainformacoes/widgets/appBarWidget.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
-class AddInfoScreen extends StatefulWidget {
-  AddInfoScreen({super.key});
-  static const routeName = "/addInfoScreen";
+class AddServicoScreen extends StatelessWidget {
+  AddServicoScreen({super.key});
+  static const routeName = "/addServicoScreen";
 
-  @override
-  State<AddInfoScreen> createState() => _AddInfoScreenState();
-}
-
-class _AddInfoScreenState extends State<AddInfoScreen> {
-  final FirebaseStorage storage = FirebaseStorage.instance;
-  bool uploading = false;
-
-  Future<XFile?> getImage() async {
-    final ImagePicker _picker = ImagePicker();
-    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    return image;
-  }
-
-  Future<UploadTask> uploadImage(String path) async {
-    File file = File(path);
-    try {
-      String ref = 'images/img-${DateTime.now().toString()}.jpg';
-      return storage.ref(ref).putFile(file);
-    } on FirebaseException catch (e) {
-      throw Exception('Erro no upload: ${e.code}');
-    }
-  }
+  final ServicoController controller = ServicoController.instance;
 
   void _submitForm() {
-    final controller = InfoController.instance;
-    if (controller.infoFormKey.currentState!.validate()) {
-      controller.addNewInfo();
+    if (controller.servicoFormKey.currentState!.validate()) {
+      controller.addNewServico();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = InfoController.instance;
-
     return Scaffold(
       backgroundColor: softCream,
-      appBar: AppBarWidget(showBackArrow: true, title: Text('Nova Informação')),
+      appBar: AppBarWidget(showBackArrow: true, title: Text('Novo Serviço')),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -59,7 +31,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
             ),
             SizedBox(height: 20),
             Form(
-              key: controller.infoFormKey,
+              key: controller.servicoFormKey,
               child: Card(
                 color: lightPeach,
                 elevation: 4,
@@ -68,19 +40,11 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
                   padding: EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      buildInputField(controller.grandArea, 'Grande Área', Icons.text_snippet),
-                      SizedBox(height: 15),
-                      buildInputField(controller.pequeArea, 'Pequena Área', Icons.text_snippet),
-                      SizedBox(height: 15),
                       buildInputField(controller.titulo, 'Título', Icons.title),
                       SizedBox(height: 15),
-                      buildInputField(controller.descricao, 'Descrição', Icons.book, maxLines: 3),
+                      buildInputField(controller.descricao, 'Descrição', Icons.description, maxLines: 3),
                       SizedBox(height: 15),
-                      buildInputField(controller.endereco, 'Endereço', Icons.map),
-                      SizedBox(height: 15),
-                      buildInputField(controller.telefone, 'Telefone', Icons.phone),
-                      SizedBox(height: 15),
-                      buildInputField(controller.maisInfo, 'Mais Informações', Icons.add),
+                      buildInputField(controller.categoria, 'Categoria', Icons.category),
                     ],
                   ),
                 ),
@@ -94,7 +58,7 @@ class _AddInfoScreenState extends State<AddInfoScreen> {
         child: ElevatedButton.icon(
           onPressed: _submitForm,
           icon: Icon(Icons.save),
-          label: Text('Salvar Informação'),
+          label: Text('Salvar Serviço'),
           style: ElevatedButton.styleFrom(
             backgroundColor: softOrange,
             minimumSize: Size(double.infinity, 50),

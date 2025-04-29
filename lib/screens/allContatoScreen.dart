@@ -1,30 +1,30 @@
 import 'package:empoderainformacoes/const/colors.dart';
-import 'package:empoderainformacoes/screens/addInfoScreen.dart';
+import 'package:empoderainformacoes/screens/addContatoScreen.dart';
 import 'package:empoderainformacoes/widgets/appBarWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/infoController.dart';
-import '../models/informacoesModel.dart';
-import '../widgets/infoWidget.dart';
+import '../controllers/contatoController.dart';
+import '../models/contatoModel.dart';
+import '../widgets/contatoWidget.dart';
 
-class AllInfoScreen extends StatelessWidget {
-  const AllInfoScreen({super.key});
-  static const routeName = "/allInfoScreen";
+class AllContatoScreen extends StatelessWidget {
+  const AllContatoScreen({super.key});
+  static const routeName = "/allContatoScreen";
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(InfoController());
+    final controller = Get.put(ContatoController());
 
     return Scaffold(
       backgroundColor: softCream,
-      appBar: AppBarWidget(showBackArrow: true, title: Text('Informações Cadastradas')),
+      appBar: AppBarWidget(showBackArrow: true, title: Text('Contatos Cadastrados')),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Listagem de Informações',
+              'Listagem de Contatos',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 15),
@@ -32,21 +32,21 @@ class AllInfoScreen extends StatelessWidget {
               child: Obx(
                 () => FutureBuilder(
                   key: Key(controller.refreshData.value.toString()),
-                  future: controller.allInfo(),
+                  future: controller.allContatos(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
-                      return Center(child: Text('Erro ao buscar dados: ${snapshot.error}'));
+                      return Center(child: Text('Erro ao buscar contatos: ${snapshot.error}'));
                     } else if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
-                      return Center(child: Text('Nenhuma informação encontrada'));
+                      return Center(child: Text('Nenhum contato encontrado'));
                     } else {
-                      final informacoes = snapshot.data as List<InfoModel>;
+                      final contatos = snapshot.data as List<ContatoModel>;
                       return ListView.separated(
-                        itemCount: informacoes.length,
+                        itemCount: contatos.length,
                         separatorBuilder: (context, index) => SizedBox(height: 12),
-                        itemBuilder: (context, index) => InfoWidget(
-                          informacoes: informacoes[index],
+                        itemBuilder: (context, index) => ContatoWidget(
+                          contato: contatos[index],
                         ),
                       );
                     }
@@ -59,8 +59,8 @@ class AllInfoScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: softPink,
-        onPressed: () => Get.to(() => AddInfoScreen()),
-        label: Text('Nova Informação'),
+        onPressed: () => Get.to(() => AddContatoScreen()),
+        label: Text('Novo Contato'),
         icon: Icon(Icons.add),
       ),
     );

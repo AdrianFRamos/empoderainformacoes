@@ -1,7 +1,7 @@
 import 'package:empoderainformacoes/const/colors.dart';
+import 'package:empoderainformacoes/screens/allContatoScreen.dart';
 import 'package:empoderainformacoes/screens/allInfoScreen.dart';
-import 'package:empoderainformacoes/screens/homeScreen.dart';
-import 'package:empoderainformacoes/screens/infoPersonScreen.dart';
+import 'package:empoderainformacoes/screens/allServicoScreen.dart';
 import 'package:empoderainformacoes/screens/updateprofileScreen.dart';
 import 'package:empoderainformacoes/utils/helper.dart';
 import 'package:empoderainformacoes/widgets/profileMenuWidget.dart';
@@ -21,12 +21,6 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: softPink,
-        leading: IconButton(
-          onPressed: (){
-            Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
-          }, 
-          icon: Icon(Icons.arrow_back_ios_new),
-        ),
         title: Text(
           "Perfil",
           style: Theme.of(context).textTheme.headlineMedium,
@@ -85,50 +79,11 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 Text(
                   "laphis@laphis.com",
-                  style: Theme.of(context).textTheme.bodyMedium
-          
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: 200,
-                  child: ElevatedButton(
-                    onPressed: () => Get.to(() => UpdateProfileScreen()), 
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: softPink,
-                      side: BorderSide.none,
-                      shape: StadiumBorder(),
-                    ),
-                    child: Text(
-                      "Edit Profile",
-                      style: TextStyle(
-                        color: Colors.white
-                      ),
-                    )
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall
+
                 ),
                 SizedBox(
                   height: 30,
-                ),
-                Divider(),
-                SizedBox(
-                  height: 10,
-                ),
-                ProfileMenuWidget(
-                  title: "Configuração",
-                  icon: Icons.settings,
-                  onPress: () {},
-                ),
-                ProfileMenuWidget(
-                  title: "Detalhes",
-                  icon: Icons.pageview_outlined,
-                  onPress: () {},
-                ),
-                ProfileMenuWidget(
-                  title: "Privacidade do usuario",
-                  icon: Icons.privacy_tip,
-                  onPress: () {},
                 ),
                 Divider(),
                 SizedBox(
@@ -140,10 +95,16 @@ class ProfileScreen extends StatelessWidget {
                   onPress: () => Get.to(() => AllInfoScreen()), 
                 ),
                 ProfileMenuWidget(
-                  title: "Informações",
+                  title: "Cadastrar Contatos",
                   icon: Icons.info_outline,
-                  onPress: () => Get.to(() => InfoPersonScreen()), 
+                  onPress: () => Get.to(() => AllContatoScreen()), 
                 ),
+                ProfileMenuWidget(
+                  title: "Cadastrar Serviços",
+                  icon: Icons.info_outline,
+                  onPress: () => Get.to(() => AllServicoScreen()), 
+                ),
+                Divider(),
                 ProfileMenuWidget(
                   title: "Sair",
                   icon: Icons.output,

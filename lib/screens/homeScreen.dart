@@ -1,4 +1,5 @@
 import 'package:empoderainformacoes/screens/secondScreen.dart';
+import 'package:empoderainformacoes/widgets/bottomBarWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -191,8 +192,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 .where((grandArea) => grandArea.toLowerCase().contains(searchQuery))
                                 .toSet()
                                 .toList();
-                            return Wrap(
-                              children: uniqueGrandAreas.map((grandArea) => buildGridItem(grandArea)).toList(),
+                            return SingleChildScrollView(
+                              child: Wrap(
+                                children: uniqueGrandAreas.map((grandArea) => buildGridItem(grandArea)).toList(),
+                              ),
                             );
                           }
                         },
@@ -206,6 +209,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: BottomBarWidget(
       ),
     );
   }

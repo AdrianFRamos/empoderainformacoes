@@ -1,3 +1,4 @@
+import 'package:empoderainformacoes/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:empoderainformacoes/controllers/infoController.dart';
@@ -20,12 +21,17 @@ class EditInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Editar Informação')),
+      backgroundColor: softCream,
+      appBar: AppBar(
+        title: Text('Editar Informação'),
+        backgroundColor: softPink,
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
         child: Form(
           key: infoController.infoFormKey,
           child: Card(
+            color: palePink,
             elevation: 4,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: Padding(
@@ -60,6 +66,7 @@ class EditInfoScreen extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             minimumSize: Size(double.infinity, 50),
             textStyle: TextStyle(fontSize: 18),
+            backgroundColor: softPink
           ),
         ),
       ),
@@ -74,7 +81,7 @@ class EditInfoScreen extends StatelessWidget {
         labelText: label,
         prefixIcon: Icon(icon),
         filled: true,
-        fillColor: Colors.grey.shade100,
+        fillColor: Colors.white,
         contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),

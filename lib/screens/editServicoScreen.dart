@@ -14,6 +14,10 @@ class EditServicoScreen extends StatelessWidget {
 
   final ServicoController servicoController = Get.find();
 
+  void _submitForm() {
+    servicoController.updateServico(servico.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,37 +25,57 @@ class EditServicoScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Editar Serviço'),
         backgroundColor: palePink,
-        iconTheme: IconThemeData(color: Colors.black),
-        titleTextStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
       ),
-      body: Form(
-        key: servicoController.servicoFormKey,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextFormField(
-                controller: servicoController.titulo,
-                decoration: InputDecoration(labelText: 'Título'),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(20),
+        child: Form(
+          key: servicoController.servicoFormKey,
+          child: Card(
+            color: palePink,
+            elevation: 4,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  buildInputField(servicoController.titulo, 'Título', Icons.title),
+                  SizedBox(height: 15),
+                  buildInputField(servicoController.descricao, 'Descrição', Icons.description, maxLines: 3),
+                  SizedBox(height: 15),
+                  buildInputField(servicoController.categoria, 'Categoria', Icons.category),
+                ],
               ),
-              TextFormField(
-                controller: servicoController.descricao,
-                decoration: InputDecoration(labelText: 'Descrição'),
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-              ),
-              TextFormField(
-                controller: servicoController.categoria,
-                decoration: InputDecoration(labelText: 'Categoria'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  servicoController.updateServico(servico.id);
-                },
-                child: Text('Salvar'),
-              ),
-            ],
+            ),
           ),
         ),
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(15),
+        child: ElevatedButton.icon(
+          onPressed: _submitForm,
+          icon: Icon(Icons.save),
+          label: Text('Salvar Alterações'),
+          style: ElevatedButton.styleFrom(
+            minimumSize: Size(double.infinity, 50),
+            textStyle: TextStyle(fontSize: 18),
+            backgroundColor: softPink,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildInputField(TextEditingController controller, String label, IconData icon, {int maxLines = 1}) {
+    return TextFormField(
+      controller: controller,
+      maxLines: maxLines,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon),
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
   }

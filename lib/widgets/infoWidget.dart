@@ -1,3 +1,4 @@
+import 'package:empoderainformacoes/const/colors.dart';
 import 'package:empoderainformacoes/models/informacoesModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class InfoWidget extends StatelessWidget {
           padding: EdgeInsets.all(8),
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.blueAccent,
+            color: softPink,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Stack(

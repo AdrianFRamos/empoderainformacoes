@@ -30,19 +30,25 @@ class AddContatoScreen extends StatelessWidget {
           children: [
             Text(
               'Preencha os dados abaixo:',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22, 
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+              ),
             ),
             SizedBox(height: 20),
             Form(
               key: controller.contatoFormKey,
               child: Card(
-                color: lightPeach,
+                color: palePink,
                 elevation: 4,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 child: Padding(
                   padding: EdgeInsets.all(20),
                   child: Column(
                     children: [
+                      buildInputField(controller.categoria, 'Categoria', Icons.list),
+                      SizedBox(height: 15),
                       buildInputField(controller.nome, 'Nome', Icons.person),
                       SizedBox(height: 15),
                       buildInputField(controller.telefone, 'Telefone', Icons.phone),
@@ -63,7 +69,7 @@ class AddContatoScreen extends StatelessWidget {
           icon: Icon(Icons.save),
           label: Text('Salvar Contato'),
           style: ElevatedButton.styleFrom(
-            backgroundColor: softOrange,
+            backgroundColor: softPink,
             minimumSize: Size(double.infinity, 50),
             textStyle: TextStyle(fontSize: 18),
           ),
@@ -79,7 +85,7 @@ class AddContatoScreen extends StatelessWidget {
         labelText: label,
         prefixIcon: Icon(icon),
         filled: true,
-        fillColor: Colors.grey.shade100,
+        fillColor: Colors.white,
         contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),

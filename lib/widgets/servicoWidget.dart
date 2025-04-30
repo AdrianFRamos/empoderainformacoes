@@ -1,3 +1,4 @@
+import 'package:empoderainformacoes/const/colors.dart';
 import 'package:empoderainformacoes/models/servicoModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class ServicoWidget extends StatelessWidget {
           padding: EdgeInsets.all(8),
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.blueAccent,
+            color: softPink,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Stack(
@@ -61,6 +62,13 @@ class ServicoWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Text(
+                    servico.categoria,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  SizedBox(height: 5),
                   Text(
                     servico.titulo,
                     maxLines: 1,

@@ -25,7 +25,11 @@ class AllServicoScreen extends StatelessWidget {
           children: [
             Text(
               'Listagem de Serviços',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22, 
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+              ),
             ),
             SizedBox(height: 15),
             Expanded(

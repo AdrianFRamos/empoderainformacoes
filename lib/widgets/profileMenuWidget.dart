@@ -15,7 +15,7 @@ class ProfileMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    var iconColor = isDark ? Colors.white : Colors.blueAccent;
+    var iconColor = isDark ? Colors.white : Colors.black;
 
     return ListTile(
       onTap: onPress,
@@ -24,7 +24,7 @@ class ProfileMenuWidget extends StatelessWidget {
         height: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          color: Colors.blueAccent.withOpacity(0.1),
+          color: Colors.black.withOpacity(0.1),
         ),
         child: Icon(icon, color: iconColor,),
       ),
@@ -37,12 +37,12 @@ class ProfileMenuWidget extends StatelessWidget {
         height: 30,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          color: Colors.grey.withOpacity(0.1)
+          color: Colors.black.withOpacity(0.1)
         ),
         child: Icon(
           Icons.arrow_forward_ios_rounded,
           size: 18,
-          color: Colors.grey,
+          color: Colors.black,
         ),
       ): null,
     );

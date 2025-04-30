@@ -8,6 +8,7 @@ class ContatoController extends GetxController {
   static ContatoController get instance => Get.find();
 
   final nome = TextEditingController();
+  final categoria = TextEditingController();
   final telefone = TextEditingController();
   final email = TextEditingController();
   final TextEditingController _cleanController = TextEditingController();
@@ -38,6 +39,7 @@ class ContatoController extends GetxController {
 
       final contato = ContatoModel(
         id: '',
+        categoria: categoria.text.trim(),
         nome: nome.text.trim(),
         telefone: telefone.text.trim(),
         email: email.text.trim(),
@@ -60,6 +62,7 @@ class ContatoController extends GetxController {
 
   void loadContato(ContatoModel contato) {
     nome.text = contato.nome;
+    categoria.text = contato.categoria;
     telefone.text = contato.telefone;
     email.text = contato.email;
   }
@@ -72,6 +75,7 @@ class ContatoController extends GetxController {
 
       final contato = ContatoModel(
         id: id,
+        categoria: categoria.text.trim(),
         nome: nome.text.trim(),
         telefone: telefone.text.trim(),
         email: email.text.trim(),
@@ -105,6 +109,7 @@ class ContatoController extends GetxController {
 
   void resetFormField() {
     nome.clear();
+    categoria.clear();
     telefone.clear();
     email.clear();
     contatoFormKey.currentState?.reset();

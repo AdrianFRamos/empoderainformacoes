@@ -25,7 +25,11 @@ class AllInfoScreen extends StatelessWidget {
           children: [
             Text(
               'Listagem de Informações',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22, 
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+              ),
             ),
             SizedBox(height: 15),
             Expanded(
@@ -44,7 +48,7 @@ class AllInfoScreen extends StatelessWidget {
                       final informacoes = snapshot.data as List<InfoModel>;
                       return ListView.separated(
                         itemCount: informacoes.length,
-                        separatorBuilder: (context, index) => SizedBox(height: 12),
+                        separatorBuilder: (context, index) => SizedBox(height: 5),
                         itemBuilder: (context, index) => InfoWidget(
                           informacoes: informacoes[index],
                         ),

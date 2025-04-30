@@ -1,8 +1,9 @@
+import 'package:empoderainformacoes/const/colors.dart';
+import 'package:empoderainformacoes/controllers/contatoController.dart';
 import 'package:empoderainformacoes/models/contatoModel.dart';
+import 'package:empoderainformacoes/screens/editContatoScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/contatoController.dart';
-import '../screens/editContatoScreen.dart';
 
 class ContatoWidget extends StatelessWidget {
   const ContatoWidget({super.key, required this.contato});
@@ -21,7 +22,7 @@ class ContatoWidget extends StatelessWidget {
           padding: EdgeInsets.all(8),
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.blueAccent,
+            color: softPink,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Stack(
@@ -37,7 +38,7 @@ class ContatoWidget extends StatelessWidget {
                   onPressed: () {
                     contatoController.loadContato(contato);
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => EditContatoScreen(contato: contato),
+                      builder: (context) => EditContatoScreen(contato: contato,),
                     ));
                   },
                 ),

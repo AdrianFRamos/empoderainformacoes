@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ContatoModel {
   String id;
+  final String categoria;
   final String nome;
   final String telefone;
   final String email;
@@ -9,18 +10,20 @@ class ContatoModel {
 
   ContatoModel({
     required this.id,
+    required this.categoria,
     required this.nome,
     required this.telefone,
     required this.email,
     this.dateTime,
   });
 
-  static ContatoModel empty() => ContatoModel(id: '', nome: '', telefone: '', email: '', dateTime: null);
+  static ContatoModel empty() => ContatoModel(id: '', categoria:'', nome: '', telefone: '', email: '', dateTime: null);
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'nome': nome,
+      'categoria': categoria,
       'telefone': telefone,
       'email': email,
       'Datetime': dateTime != null ? Timestamp.fromDate(dateTime!) : null,
@@ -30,6 +33,7 @@ class ContatoModel {
   factory ContatoModel.fromMap(Map<String, dynamic> data) {
     return ContatoModel(
       id: data['id'] as String,
+      categoria: data['categoria'] as String,
       nome: data['nome'] as String,
       telefone: data['telefone'] as String,
       email: data['email'] as String,
@@ -41,6 +45,7 @@ class ContatoModel {
     final data = snapshot.data() as Map<String, dynamic>;
     return ContatoModel(
       id: snapshot.id,
+      categoria: data['categoria'] ?? '',
       nome: data['nome'] ?? '',
       telefone: data['telefone']?.toString() ?? '',
       email: data['email'] ?? '',

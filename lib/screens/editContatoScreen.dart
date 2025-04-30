@@ -24,7 +24,7 @@ class EditContatoScreen extends StatelessWidget {
       backgroundColor: softCream,
       appBar: AppBar(
         title: Text('Editar Contato'),
-        backgroundColor: palePink,
+        backgroundColor: softPink,
         iconTheme: IconThemeData(color: Colors.black),
         titleTextStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
       ),
@@ -33,12 +33,15 @@ class EditContatoScreen extends StatelessWidget {
         child: Form(
           key: contatoController.contatoFormKey,
           child: Card(
+            color: palePink,
             elevation: 4,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: Padding(
               padding: EdgeInsets.all(20),
               child: Column(
                 children: [
+                  buildInputField(contatoController.categoria, 'Categoria', Icons.list),
+                  SizedBox(height: 15),
                   buildInputField(contatoController.nome, 'Nome', Icons.person),
                   SizedBox(height: 15),
                   buildInputField(contatoController.telefone, 'Telefone', Icons.phone),
@@ -57,7 +60,7 @@ class EditContatoScreen extends StatelessWidget {
           icon: Icon(Icons.save),
           label: Text('Salvar Alterações'),
           style: ElevatedButton.styleFrom(
-            backgroundColor: softOrange,
+            backgroundColor: softPink,
             minimumSize: Size(double.infinity, 50),
             textStyle: TextStyle(fontSize: 18),
           ),
@@ -73,7 +76,7 @@ class EditContatoScreen extends StatelessWidget {
         labelText: label,
         prefixIcon: Icon(icon),
         filled: true,
-        fillColor: Colors.grey.shade100,
+        fillColor: Colors.white,
         contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),

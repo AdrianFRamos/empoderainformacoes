@@ -25,7 +25,11 @@ class AllContatoScreen extends StatelessWidget {
           children: [
             Text(
               'Listagem de Contatos',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22, 
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+              ),
             ),
             SizedBox(height: 15),
             Expanded(

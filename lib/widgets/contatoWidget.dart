@@ -66,6 +66,14 @@ class ContatoWidget extends StatelessWidget {
                     contato.nome,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    contato.nome,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   SizedBox(height: 5),
@@ -73,14 +81,6 @@ class ContatoWidget extends StatelessWidget {
                     contato.telefone,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    contato.email,
-                    softWrap: true,
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
                   ),
                 ],
               ),

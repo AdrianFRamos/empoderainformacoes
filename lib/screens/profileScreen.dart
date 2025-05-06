@@ -2,7 +2,7 @@ import 'package:empoderainformacoes/const/colors.dart';
 import 'package:empoderainformacoes/screens/allContatoScreen.dart';
 import 'package:empoderainformacoes/screens/allInfoScreen.dart';
 import 'package:empoderainformacoes/screens/allServicoScreen.dart';
-import 'package:empoderainformacoes/screens/updateprofileScreen.dart';
+//import 'package:empoderainformacoes/screens/updateprofileScreen.dart';
 import 'package:empoderainformacoes/utils/helper.dart';
 import 'package:empoderainformacoes/widgets/profileMenuWidget.dart';
 import 'package:flutter/material.dart';

@@ -16,7 +16,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: Stack(
         children: [
           IconButton(
-            icon: Icon(Icons.notifications, color: AppColor.primary, size: 40),
+            icon: Icon(Icons.contact_phone, color: Colors.black, size: 40,),
             onPressed: () {
               Scaffold.of(context).openDrawer(); 
             },

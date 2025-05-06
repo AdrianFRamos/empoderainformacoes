@@ -54,6 +54,8 @@ class AddContatoScreen extends StatelessWidget {
                       buildInputField(controller.telefone, 'Telefone', Icons.phone),
                       SizedBox(height: 15),
                       buildInputField(controller.email, 'Email', Icons.email),
+                      SizedBox(height: 15),
+                      buildInputField(controller.endereco, 'Endereço', Icons.map),
                     ],
                   ),
                 ),

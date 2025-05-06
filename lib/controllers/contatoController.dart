@@ -11,6 +11,8 @@ class ContatoController extends GetxController {
   final categoria = TextEditingController();
   final telefone = TextEditingController();
   final email = TextEditingController();
+  final endereco = TextEditingController();
+
   final TextEditingController _cleanController = TextEditingController();
   GlobalKey<FormState> contatoFormKey = GlobalKey<FormState>();
 
@@ -44,6 +46,7 @@ class ContatoController extends GetxController {
         telefone: telefone.text.trim(),
         email: email.text.trim(),
         dateTime: DateTime.now(),
+        endereco: endereco.text.trim(),
       );
 
       final id = await contatoRepository.addContato(contato);
@@ -65,6 +68,7 @@ class ContatoController extends GetxController {
     categoria.text = contato.categoria;
     telefone.text = contato.telefone;
     email.text = contato.email;
+    endereco.text = contato.endereco;
   }
 
   Future updateContato(String id) async {
@@ -80,6 +84,7 @@ class ContatoController extends GetxController {
         telefone: telefone.text.trim(),
         email: email.text.trim(),
         dateTime: DateTime.now(),
+        endereco: endereco.text.trim(),
       );
 
       await contatoRepository.updateContato(contato);
@@ -112,6 +117,7 @@ class ContatoController extends GetxController {
     categoria.clear();
     telefone.clear();
     email.clear();
+    endereco.clear();
     contatoFormKey.currentState?.reset();
     _cleanController.clear();
   }

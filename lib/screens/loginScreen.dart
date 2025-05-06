@@ -1,14 +1,12 @@
 import 'package:empoderainformacoes/const/colors.dart';
 import 'package:empoderainformacoes/controllers/loginController.dart';
-import 'package:empoderainformacoes/screens/forgetPassword.dart';
+//import 'package:empoderainformacoes/screens/forgetPassword.dart';
 //import 'package:empoderainformacoes/screens/signUpScreen.dart';
 import 'package:empoderainformacoes/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-
-import '../widgets/forgetPasswordWidget.dart';
+//import '../widgets/forgetPasswordWidget.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = "/loginScreen";
@@ -89,66 +87,66 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                  backgroundColor: const Color.fromARGB(255, 245, 200, 229),
-                                  context: context, 
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                  builder: (context) => Container(
-                                    padding: const EdgeInsets.all(8),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        const Text(
-                                          "Selecione uma das opções",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                       const Text(
-                                          "Selecione uma das opções para fazer um reset da sua senha",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                        ForgetPasswordWidget(
-                                          title: "E-mail",
-                                          description: "Resete via verificação por e-mail",
-                                          icon: Icons.email,
-                                          onTap: (){
-                                            Navigator.of(context).restorablePushReplacementNamed(ForgetPasswordScreen.routeName);
-                                          },
-                                        ),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        ForgetPasswordWidget(
-                                          title: "Telefone",
-                                          description: "Resete via verificação por telefone",
-                                          icon: Icons.mobile_friendly,
-                                          onTap: (){},
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                );
-                              },
-                              child: Text(
-                                "Esqueceu sua senha ?",
-                                style: Helper.getTheme(context).labelLarge,
-                              ),
-                            ),
-                          ),
+                          // Align(
+                          //   alignment: Alignment.centerRight,
+                          //   child: TextButton(
+                          //     onPressed: () {
+                          //       showModalBottomSheet(
+                          //         backgroundColor: const Color.fromARGB(255, 245, 200, 229),
+                          //         context: context, 
+                          //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          //         builder: (context) => Container(
+                          //           padding: const EdgeInsets.all(8),
+                          //           child: Column(
+                          //             crossAxisAlignment: CrossAxisAlignment.start,
+                          //             children: <Widget>[
+                          //               const Text(
+                          //                 "Selecione uma das opções",
+                          //                 style: TextStyle(
+                          //                   color: Colors.white,
+                          //                   fontSize: 30,
+                          //                   fontWeight: FontWeight.bold
+                          //                 ),
+                          //               ),
+                          //              const Text(
+                          //                 "Selecione uma das opções para fazer um reset da sua senha",
+                          //                 style: TextStyle(
+                          //                   color: Colors.white,
+                          //                   fontSize: 15,
+                          //                   fontWeight: FontWeight.bold
+                          //                 ),
+                          //               ),
+                          //               const SizedBox(
+                          //                 height: 30,
+                          //               ),
+                          //               ForgetPasswordWidget(
+                          //                 title: "E-mail",
+                          //                 description: "Resete via verificação por e-mail",
+                          //                 icon: Icons.email,
+                          //                 onTap: (){
+                          //                   Navigator.of(context).restorablePushReplacementNamed(ForgetPasswordScreen.routeName);
+                          //                 },
+                          //               ),
+                          //               const SizedBox(
+                          //                 height: 20,
+                          //               ),
+                          //               ForgetPasswordWidget(
+                          //                 title: "Telefone",
+                          //                 description: "Resete via verificação por telefone",
+                          //                 icon: Icons.mobile_friendly,
+                          //                 onTap: (){},
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         )
+                          //       );
+                          //     },
+                          //     child: Text(
+                          //       "Esqueceu sua senha ?",
+                          //       style: Helper.getTheme(context).labelLarge,
+                          //     ),
+                          //   ),
+                          // ),
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -168,29 +166,29 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          Align(
-                            child: Text(
-                              "Ou",
-                              style: Helper.getTheme(context).labelLarge,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: OutlinedButton.icon(
-                              icon: const Image(image: AssetImage("assets/logos/google.png"),width: 20,),
-                              onPressed: (){}, 
-                              label:  Text(
-                                "Faça Login com o Google",
-                                style: Helper.getTheme(context).labelLarge,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          // Align(
+                          //   child: Text(
+                          //     "Ou",
+                          //     style: Helper.getTheme(context).labelLarge,
+                          //   ),
+                          // ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
+                          // SizedBox(
+                          //   width: double.infinity,
+                          //   child: OutlinedButton.icon(
+                          //     icon: const Image(image: AssetImage("assets/logos/google.png"),width: 20,),
+                          //     onPressed: (){}, 
+                          //     label:  Text(
+                          //       "Faça Login com o Google",
+                          //       style: Helper.getTheme(context).labelLarge,
+                          //     ),
+                          //   ),
+                          // ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
                           //Align(
                           //  child: TextButton(
                           //    onPressed: () {

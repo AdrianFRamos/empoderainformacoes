@@ -75,6 +75,8 @@ flutter:
   assets:
     - assets/logos/logoempodera.jpeg
     - assets/logos/logo-unespar.jpg
+    - assets/logos/logo-unespar.png
+    - assets/logos/logo-fa.png
     - assets/logos/google.png
     - assets/icons/logoempodera_semfundo.png
     - assets/icons/mulheraceno.png

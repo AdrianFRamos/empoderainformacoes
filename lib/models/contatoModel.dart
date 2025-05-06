@@ -7,6 +7,7 @@ class ContatoModel {
   final String telefone;
   final String email;
   final DateTime? dateTime;
+  final String endereco;
 
   ContatoModel({
     required this.id,
@@ -14,10 +15,11 @@ class ContatoModel {
     required this.nome,
     required this.telefone,
     required this.email,
+    required this.endereco,
     this.dateTime,
   });
 
-  static ContatoModel empty() => ContatoModel(id: '', categoria:'', nome: '', telefone: '', email: '', dateTime: null);
+  static ContatoModel empty() => ContatoModel(id: '', categoria:'', nome: '', telefone: '', email: '', dateTime: null, endereco: '');
 
   Map<String, dynamic> toJson() {
     return {
@@ -27,6 +29,7 @@ class ContatoModel {
       'telefone': telefone,
       'email': email,
       'Datetime': dateTime != null ? Timestamp.fromDate(dateTime!) : null,
+      'endereco': endereco,
     };
   }
 
@@ -38,6 +41,7 @@ class ContatoModel {
       telefone: data['telefone'] as String,
       email: data['email'] as String,
       dateTime: data['Datetime'] != null ? (data['Datetime'] as Timestamp).toDate() : null,
+      endereco: data['endereco'] as String,
     );
   }
 
@@ -50,6 +54,7 @@ class ContatoModel {
       telefone: data['telefone']?.toString() ?? '',
       email: data['email'] ?? '',
       dateTime: data['Datetime'] != null ? (data['Datetime'] as Timestamp).toDate() : null,
+      endereco: data['endereco'] ?? '',
     );
   }
 }

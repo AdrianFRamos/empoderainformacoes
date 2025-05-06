@@ -47,6 +47,8 @@ class EditContatoScreen extends StatelessWidget {
                   buildInputField(contatoController.telefone, 'Telefone', Icons.phone),
                   SizedBox(height: 15),
                   buildInputField(contatoController.email, 'Email', Icons.email),
+                  SizedBox(height: 15),
+                  buildInputField(contatoController.endereco, 'Endereço', Icons.map),
                 ],
               ),
             ),

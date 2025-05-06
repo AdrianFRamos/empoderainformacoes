@@ -7,17 +7,18 @@ import '../middleware/iconsHomeScreen.dart';
 import '../screens/secondScreen.dart';
 
 Widget buildGridItem(String grandArea) {
-    final IconData icon = getIconForGrandArea(grandArea);
+  final IconData icon = getIconForGrandArea(grandArea);
 
-    return Padding(
+  return SizedBox(
+    width: 160,
+    height: 160,
+    child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: GestureDetector(
         onTap: () {
           Get.to(() => SecondScreen(grandArea: grandArea), transition: Transition.fadeIn);
         },
         child: Container(
-          width: 170,
-          height: 160,
           decoration: BoxDecoration(
             color: palePink,
             borderRadius: BorderRadius.circular(8),
@@ -26,10 +27,13 @@ Widget buildGridItem(String grandArea) {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: 48,
-                color: softCream,
+              SizedBox(
+                height: 48,
+                width: 48,
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Icon(icon, color: softCream),
+                ),
               ),
               SizedBox(height: 8),
               Text(
@@ -39,10 +43,13 @@ Widget buildGridItem(String grandArea) {
                   fontSize: 15,
                 ),
                 textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}

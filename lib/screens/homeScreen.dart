@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final FocusNode searchFocusNode = FocusNode();
   bool showSearchField = false;
   String searchQuery = '';
-
+  
   @override
   void initState() {
     super.initState();
@@ -52,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final InfoController infoController = InfoController.instance;
+    final largura = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: HomeAppBar(),
@@ -267,10 +268,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                 .toList();
                             return SingleChildScrollView(
                               child: Wrap(
-                                children: uniqueGrandAreas
-                                    .map((grandArea) => buildGridItem(grandArea))
-                                    .toList(),
-                              ),
+                                alignment: WrapAlignment.center,
+                                spacing: 10,
+                                runSpacing: 16,
+                                children: uniqueGrandAreas.map((grandArea) {
+                                  return LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      double largura = MediaQuery.of(context).size.width;
+
+                                      // Responsivo: Se largura < 600, usar 80% da largura, senão, fixar tamanho
+                                      double cardWidth = largura < 600 ? largura * 0.8 : 170;
+
+                                      return SizedBox(
+                                        width: cardWidth,
+                                        child: buildGridItem(grandArea),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              )                       
                             );
                           }
                         },

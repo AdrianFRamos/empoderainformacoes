@@ -57,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                             decoration: const InputDecoration(
                               prefixIcon: Icon(Icons.person_outline_outlined),
                               labelText: "E-mail",
-                              hintText: "E-nail",
+                              hintText: "E-mail",
                               border: OutlineInputBorder()
                             ),
                           ),

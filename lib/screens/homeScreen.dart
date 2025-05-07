@@ -52,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final InfoController infoController = InfoController.instance;
-    final largura = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: HomeAppBar(),
@@ -106,73 +105,97 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             builder: (_) => Padding(
                               padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Contatos: $categoria',
-                                    style: GoogleFonts.montserrat(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-                                  ),
-                                  SizedBox(height: 10),
-                                  ...contatosFiltrados.map((contato) => Card(
-                                    color: softCream,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                                    elevation: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(12),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Expanded(
-                                            flex: 3,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  contato.nome,
-                                                  style: GoogleFonts.montserrat(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black),
-                                                ),
-                                                SizedBox(height: 4),
-                                                Text(
-                                                  contato.telefone,
-                                                  style: TextStyle(color: Colors.black54),
-                                                ),
-                                                SizedBox(height: 4),
-                                                Text(
-                                                  contato.endereco,
-                                                  style: TextStyle(color: Colors.black54),
-                                                ),
-                                              ],
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Contatos: $categoria',
+                                      style: GoogleFonts.montserrat(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                                    ),
+                                    SizedBox(height: 10),
+                                    ...contatosFiltrados.map((contato) => Card(
+                                      color: softCream,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      elevation: 2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Expanded(
+                                              flex: 3,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          contato.nome,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: GoogleFonts.montserrat(
+                                                            fontSize: 16,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 8),
+                                                      Text(
+                                                        contato.horario ?? 'Seg-Sex: 08h às 17h',
+                                                        style: GoogleFonts.montserrat(
+                                                          fontSize: 12,
+                                                          fontWeight: FontWeight.w400,
+                                                          color: Colors.black54,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 4),
+                                                  Text(
+                                                    contato.telefone,
+                                                    style: TextStyle(color: Colors.black54),
+                                                  ),
+                                                  SizedBox(height: 4),
+                                                  Text(
+                                                    contato.endereco,
+                                                    style: TextStyle(color: Colors.black54),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                IconButton(
-                                                  icon: Icon(Icons.phone, color: Colors.green),
-                                                  tooltip: 'Ligar',
-                                                  onPressed: () {
-                                                    ligarPara(contato.telefone);
-                                                  },
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(Icons.location_on, color: Colors.redAccent),
-                                                  tooltip: 'Ver no mapa',
-                                                  onPressed: () {
-                                                    abrirNoMaps(contato.endereco);
-                                                  },
-                                                ),
-                                              ],
+                                            Expanded(
+                                              flex: 1,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  IconButton(
+                                                    icon: Icon(Icons.phone, color: Colors.green),
+                                                    tooltip: 'Ligar',
+                                                    onPressed: () {
+                                                      ligarPara(contato.telefone);
+                                                    },
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(Icons.location_on, color: Colors.redAccent),
+                                                    tooltip: 'Ver no mapa',
+                                                    onPressed: () {
+                                                      abrirNoMaps(contato.endereco);
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  ),
-                                ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           );
@@ -276,8 +299,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     builder: (context, constraints) {
                                       double largura = MediaQuery.of(context).size.width;
 
-                                      // Responsivo: Se largura < 600, usar 80% da largura, senão, fixar tamanho
-                                      double cardWidth = largura < 600 ? largura * 0.8 : 170;
+                                      // Responsivo: Se largura < 800, usar 80% da largura, senão, fixar tamanho
+                                      double cardWidth = largura < 800 ? largura * 0.8 : 170;
 
                                       return SizedBox(
                                         width: cardWidth,

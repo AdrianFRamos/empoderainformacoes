@@ -4,7 +4,6 @@ import 'package:empoderainformacoes/widgets/appBarWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/contatoController.dart';
-import '../models/contatoModel.dart';
 import '../widgets/contatoWidget.dart';
 
 class AllContatoScreen extends StatelessWidget {
@@ -14,6 +13,10 @@ class AllContatoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ContatoController());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.carregarContatos();
+    });
 
     return Scaffold(
       backgroundColor: softCream,
@@ -25,38 +28,45 @@ class AllContatoScreen extends StatelessWidget {
           children: [
             Text(
               'Listagem de Contatos',
-              style: TextStyle(
-                fontSize: 22, 
-                fontWeight: FontWeight.bold,
-                color: Colors.black
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            TextField(
+              onChanged: controller.filtrarContatosPorNome,
+              decoration: InputDecoration(
+                hintText: 'Buscar por nome...',
+                prefixIcon: Icon(Icons.search),
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
             SizedBox(height: 15),
             Expanded(
-              child: Obx(
-                () => FutureBuilder(
-                  key: Key(controller.refreshData.value.toString()),
-                  future: controller.allContatos(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Erro ao buscar contatos: ${snapshot.error}'));
-                    } else if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
-                      return Center(child: Text('Nenhum contato encontrado'));
-                    } else {
-                      final contatos = snapshot.data as List<ContatoModel>;
-                      return ListView.separated(
-                        itemCount: contatos.length,
-                        separatorBuilder: (context, index) => SizedBox(height: 12),
-                        itemBuilder: (context, index) => ContatoWidget(
-                          contato: contatos[index],
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ),
+              child: Obx(() {
+                final agrupados = controller.contatosAgrupadosPorCategoria;
+
+                if (agrupados.isEmpty) {
+                  return Center(child: Text('Nenhum contato encontrado'));
+                }
+
+                return ListView(
+                  children: agrupados.entries.map((entry) {
+                    final categoria = entry.key;
+                    final contatos = entry.value;
+
+                    return ExpansionTile(
+                      title: Text(categoria, style: TextStyle(fontWeight: FontWeight.bold)),
+                      children: contatos.map((contato) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          child: ContatoWidget(contato: contato),
+                        );
+                      }).toList(),
+                    );
+                  }).toList(),
+                );
+              }),
             ),
           ],
         ),

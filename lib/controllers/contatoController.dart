@@ -19,6 +19,8 @@ class ContatoController extends GetxController {
 
   RxBool refreshData = true.obs;
   final Rx<ContatoModel> selecionarContato = ContatoModel.empty().obs;
+  final RxList<ContatoModel> todosContatos = <ContatoModel>[].obs;
+  final RxList<ContatoModel> contatosFiltrados = <ContatoModel>[].obs;
   final contatoRepository = Get.put(ContatoRepository());
 
   DateTime lastNotificationTimestamp = DateTime.now().subtract(Duration(days: 1));
@@ -139,6 +141,32 @@ class ContatoController extends GetxController {
     } catch (e) {
       return [];
     }
+  }
+
+  void filtrarContatosPorNome(String termo) {
+    if (termo.isEmpty) {
+      contatosFiltrados.assignAll(todosContatos);
+    } else {
+      contatosFiltrados.assignAll(
+        todosContatos.where(
+          (c) => c.nome.toLowerCase().contains(termo.toLowerCase()),
+        ),
+      );
+    }
+  }
+
+  Map<String, List<ContatoModel>> get contatosAgrupadosPorCategoria {
+    final mapa = <String, List<ContatoModel>>{};
+    for (var contato in contatosFiltrados) {
+      mapa.putIfAbsent(contato.categoria, () => []).add(contato);
+    }
+    return mapa;
+  }
+
+  Future<void> carregarContatos() async {
+    final lista = await contatoRepository.fetchContatos(); 
+    todosContatos.assignAll(lista);
+    contatosFiltrados.assignAll(lista);
   }
 
   void markNotificationsAsRead() {

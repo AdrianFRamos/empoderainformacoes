@@ -15,6 +15,10 @@ class AllInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(InfoController());
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.carregarInformacoes();
+    });
+
     return Scaffold(
       backgroundColor: softCream,
       appBar: AppBarWidget(showBackArrow: true, title: Text('Informações Cadastradas')),
@@ -23,40 +27,43 @@ class AllInfoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Listagem de Informações',
-              style: TextStyle(
-                fontSize: 22, 
-                fontWeight: FontWeight.bold,
-                color: Colors.black
+            Text('Listagem de Informações',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            SizedBox(height: 10),
+            TextField(
+              onChanged: controller.filtrarPorTitulo,
+              decoration: InputDecoration(
+                hintText: 'Buscar por título...',
+                prefixIcon: Icon(Icons.search),
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
             SizedBox(height: 15),
             Expanded(
-              child: Obx(
-                () => FutureBuilder(
-                  key: Key(controller.refreshData.value.toString()),
-                  future: controller.allInfo(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Erro ao buscar dados: ${snapshot.error}'));
-                    } else if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
-                      return Center(child: Text('Nenhuma informação encontrada'));
-                    } else {
-                      final informacoes = snapshot.data as List<InfoModel>;
-                      return ListView.separated(
-                        itemCount: informacoes.length,
-                        separatorBuilder: (context, index) => SizedBox(height: 5),
-                        itemBuilder: (context, index) => InfoWidget(
-                          informacoes: informacoes[index],
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ),
+              child: Obx(() {
+                final agrupadas = controller.agrupadasPorGrandArea;
+                if (agrupadas.isEmpty) {
+                  return Center(child: Text('Nenhuma informação encontrada'));
+                }
+                return ListView(
+                  children: agrupadas.entries.map((entry) {
+                    final grupo = entry.key;
+                    final infos = entry.value;
+
+                    return ExpansionTile(
+                      title: Text(grupo, style: TextStyle(fontWeight: FontWeight.bold)),
+                      children: infos.map((info) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          child: InfoWidget(informacoes: info),
+                        );
+                      }).toList(),
+                    );
+                  }).toList(),
+                );
+              }),
             ),
           ],
         ),

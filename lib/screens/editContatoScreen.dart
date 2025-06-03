@@ -14,10 +14,10 @@ class EditContatoScreen extends StatefulWidget {
 }
 
 class _EditContatoScreenState extends State<EditContatoScreen> {
-  final List<String> diasDaSemana = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+/*   final List<String> diasDaSemana = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
   final RxList<String> diasSelecionados = <String>[].obs;
   TimeOfDay? horaInicio;
-  TimeOfDay? horaFim;
+  TimeOfDay? horaFim; */
 
   final ContatoController contatoController = Get.find();
 
@@ -26,7 +26,7 @@ class _EditContatoScreenState extends State<EditContatoScreen> {
     super.initState();
     contatoController.loadContato(widget.contato);
 
-    final horarioStr = widget.contato.horario;
+    /* final horarioStr = widget.contato.horario;
     final partes = horarioStr.split(':');
     if (partes.length == 2) {
       final dias = partes[0].split(',').map((d) => d.trim()).toList();
@@ -37,27 +37,27 @@ class _EditContatoScreenState extends State<EditContatoScreen> {
         horaInicio = _parseTime(horarios[0].trim());
         horaFim = _parseTime(horarios[1].trim());
       }
-    }
+    } */
   }
 
-  TimeOfDay _parseTime(String time) {
+ /*  TimeOfDay _parseTime(String time) {
     final partes = time.split(':');
     return TimeOfDay(
       hour: int.parse(partes[0]),
       minute: int.parse(partes[1]),
     );
-  }
+  } */
 
-  String horarioConcatenado(BuildContext context) {
+  /* String horarioConcatenado(BuildContext context) {
     if (diasSelecionados.isEmpty || horaInicio == null || horaFim == null) return '';
     final dias = diasSelecionados.join(', ');
     final inicio = horaInicio!.format(context);
     final fim = horaFim!.format(context);
     return '$dias: $inicio às $fim';
-  }
+  } */
 
   void _submitForm() {
-    contatoController.horario.text = horarioConcatenado(context);
+    //contatoController.horario.text = horarioConcatenado(context);
     contatoController.updateContato(widget.contato.id);
   }
 
@@ -93,8 +93,10 @@ class _EditContatoScreenState extends State<EditContatoScreen> {
                   buildInputField(contatoController.email, 'Email', Icons.email),
                   SizedBox(height: 15),
                   buildInputField(contatoController.endereco, 'Endereço', Icons.map),
+                  SizedBox(height: 15),
+                  buildInputField(contatoController.horario, 'Horario de Atendimento', Icons.access_time),
                   SizedBox(height: 25),
-                  Text('Dias de Atendimento:', style: TextStyle(fontWeight: FontWeight.bold)),
+                  /* Text('Dias de Atendimento:', style: TextStyle(fontWeight: FontWeight.bold)),
                   Obx(() => Wrap(
                         spacing: 8,
                         children: diasDaSemana.map((dia) {
@@ -138,7 +140,7 @@ class _EditContatoScreenState extends State<EditContatoScreen> {
                         style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
                       ),
                     ],
-                  ),
+                  ), */
                 ],
               ),
             ),

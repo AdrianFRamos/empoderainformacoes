@@ -19,6 +19,8 @@ class InfoController extends GetxController {
 
   RxBool refreshData = true.obs;
   final Rx<InfoModel> selecionarInfo = InfoModel.empty().obs;
+  final RxList<InfoModel> todasInformacoes = <InfoModel>[].obs;
+  final RxList<InfoModel> informacoesFiltradas = <InfoModel>[].obs;
   final infoRepository = Get.put(InfoRepository());
 
   DateTime lastNotificationTimestamp = DateTime.now().subtract(Duration(days: 1));
@@ -102,7 +104,7 @@ class InfoController extends GetxController {
         endereco: endereco.text.trim(),
         telefone: telefone.text.trim(),
         maisInfo: maisInfo.text.trim(),
-        dateTime: DateTime.now(), // Adiciona a data/hora atual
+        dateTime: DateTime.now(), 
       );
 
       await infoRepository.updateInfo(informacoes);
@@ -153,6 +155,36 @@ class InfoController extends GetxController {
       return newGrandAreas;
     } catch (e) {
       return [];
+    }
+  }
+
+  void filtrarPorTitulo(String termo) {
+    if (termo.isEmpty) {
+      informacoesFiltradas.assignAll(todasInformacoes);
+    } else {
+      informacoesFiltradas.assignAll(
+        todasInformacoes.where((info) =>
+          info.titulo.toLowerCase().contains(termo.toLowerCase()),
+        ),
+      );
+    }
+  }
+
+  Map<String, List<InfoModel>> get agrupadasPorGrandArea {
+    final mapa = <String, List<InfoModel>>{};
+    for (var info in informacoesFiltradas) {
+      mapa.putIfAbsent(info.grandArea, () => []).add(info);
+    }
+    return mapa;
+  }
+
+  Future<void> carregarInformacoes() async {
+    try {
+      final lista = await infoRepository.fetchInfo();
+      todasInformacoes.assignAll(lista);
+      informacoesFiltradas.assignAll(lista);
+    } catch (e) {
+      snackBar.errorSnackBar(title: 'Erro', message: e.toString());
     }
   }
 
